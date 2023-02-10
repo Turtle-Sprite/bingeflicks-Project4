@@ -42,5 +42,8 @@
 - Create a star system for ratings.
 - Make movie suggestions based on user's past "watch history" on homepage.
 
-![Express-Routing](./imgs/Express-Routing.png)
+![MongoDB ERD] (https://imgur.com/a/F7La6I5)
 
+![Express Routing](https://imgur.com/EwTKiAk)
+
+![Basic Wireframes] (https://imgur.com/taQjNJt)
