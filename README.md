@@ -43,4 +43,4 @@
 - Make movie suggestions based on user's past "watch history" on homepage.
 
 ![Express-Routing](./imgs/Express-Routing.png)
-/Users/crystalsheeley/Documents/unit4/bingeflicks-Project4/src/imgs/Express-Routing.png
+
