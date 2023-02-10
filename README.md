@@ -43,6 +43,6 @@
 - Make movie suggestions based on user's past "watch history" on homepage.
 
 
-![MongoDB ERD](https://i.imgur.com/x8gelij.png)
+![MongoDB ERD](https://i.imgur.com/W1OElOY.png)
 ![Express Routing](https://i.imgur.com/EwTKiAk.png)
 ![Basic Wireframes](https://i.imgur.com/taQjNJt.png)
