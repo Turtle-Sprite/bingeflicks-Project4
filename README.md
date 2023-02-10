@@ -42,4 +42,4 @@
 - Create a star system for ratings.
 - Make movie suggestions based on user's past "watch history" on homepage.
 
-![Express-Routing](Express-Routing.png)
+![Express-Routing](./imgs/Express-Routing.png)
