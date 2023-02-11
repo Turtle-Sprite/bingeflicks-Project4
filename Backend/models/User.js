@@ -14,11 +14,25 @@ const UserSchema = new mongoose.Schema({
         type: String 
     },
     address: {
-        type: String 
+        street: {
+          type: String
+        },
+        city: {
+          type: String
+        },
+        state: {
+          type: String
+        },
+        zip: {
+          type: Number
+        },
     },
+    reviewsId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Reviews' }],
+    moviesFavId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movies' }],
+    orderId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Order' }],
 }, {
-    timestamps: true //mongoose will manage created at tand updated at fields for us
+    timestamps: true 
 })
 
-//turn the schema into a model so wee can use it in our j
+
 module.exports = mongoose.model('User', UserSchema)

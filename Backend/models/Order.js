@@ -10,9 +10,9 @@ const OrderSchema = new mongoose.Schema({
     movieGenre: {
         type: String 
     },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 }, {
-    timestamps: true //mongoose will manage created at tand updated at fields for us
+    timestamps: true 
 })
 
-//turn the schema into a model so wee can use it in our j
 module.exports = mongoose.model('Order', OrderSchema)

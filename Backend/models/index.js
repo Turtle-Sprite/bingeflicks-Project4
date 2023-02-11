@@ -15,5 +15,8 @@ db.on('error', err => console.log(` the data center has burned to the ground:`, 
 
 //export all of the models
 module.exports = {
-    User: require('./User')
+    User: require('./User'),
+    Movies: require('./Movies'),
+    Review: require('./Review'),
+    Order: require('./Order')
 }
