@@ -34,9 +34,9 @@ router.post('/register', async (req, res) => {
     // create new user
     const newUser = new db.User(
       {email: req.body.email,
-      name: req.body.name,
+      fname: req.body.fname,
+      lname: req.body.lname,
       password: hashedPassword,
-      address: req.body.address
       })
     console.log(newUser)
 
@@ -44,10 +44,10 @@ router.post('/register', async (req, res) => {
 
     // create jwt payload
     const payload = {
-      name: newUser.name,
+      fname: newUser.fname,
+      lname: newUser.lname,
       email: newUser.email,
       id: newUser.id,
-      address: newUser.address
     }
 
     // sign jwt and send back
@@ -84,11 +84,10 @@ router.post('/login', async (req, res) => {
 
     // create jwt payload
     const payload = {
-      name: foundUser.name,
+      fname: foundUser.fname,
+      lname: foundUser.lname,
       email: foundUser.email,
       id: foundUser.id,
-      phoneNumber: foundUser.phoneNumber,
-      address: foundUser.address
     }
 
     // sign jwt and send back
