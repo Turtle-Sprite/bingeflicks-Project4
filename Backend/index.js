@@ -16,7 +16,7 @@ app.use(cors())
 app.use(express.json())
 
 //request stripe api
-app.use("/api/stripe", stripe)
+app.use("/stripe", stripe)
 
 //set up res.locals here
 

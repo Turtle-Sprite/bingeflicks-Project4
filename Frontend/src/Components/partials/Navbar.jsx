@@ -1,8 +1,8 @@
-import Link from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 function Navbar() {
     return ( 
-        <nav clasName="nav-bar"> 
+        <nav className="nav-bar"> 
         <Link to="/">
             <h2>Rent Movies</h2>
         </Link>

@@ -46,3 +46,15 @@
 ![MongoDB ERD](https://i.imgur.com/W1OElOY.png)
 ![Express Routing](https://i.imgur.com/EwTKiAk.png)
 ![Basic Wireframes](https://i.imgur.com/taQjNJt.png)
+
+
+* Tutorials
+- on Redux:
+//used for login
+https://www.youtube.com/watch?v=mvfsC66xqj0
+
+- on Stripe Integration
+https://www.youtube.com/watch?v=72iEz5iopqQ
+
+
+

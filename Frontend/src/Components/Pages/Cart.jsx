@@ -1,10 +1,10 @@
 import PayButton from '../../Components/partials/PayButton'
 
 
-function Cart() {
+function Cart({currentUser, cart, setCart}) {
     return ( 
         <>
-            <PayButton cartItem = {cart.cartItems} />
+            <PayButton cartItem = {cart} currentUser={currentUser} />
         </>
      );
 }
