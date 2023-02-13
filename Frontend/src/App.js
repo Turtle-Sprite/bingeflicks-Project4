@@ -10,6 +10,7 @@ import NotFound from './Components/Pages/NotFound'
 import Cart from './Components/Pages/Cart'
 import CheckoutSuccess from './Components/partials/CheckoutSuccess'
 import Navbar from './Components/partials/Navbar'
+import Footer from './Components/partials/Footer'
 import './App.css';
 
 
@@ -43,6 +44,7 @@ function App() {
         <Route path="/checkout-success" element={<CheckoutSuccess currentUser={currentUser}/>}/>
         {/* <Route path="/*" element={<NotFound />} /> */}
       </Routes>
+      <Footer />
     </Router>
 
       <h1>Hello</h1>

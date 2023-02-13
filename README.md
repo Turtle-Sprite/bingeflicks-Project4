@@ -56,5 +56,7 @@ https://www.youtube.com/watch?v=mvfsC66xqj0
 - on Stripe Integration
 https://www.youtube.com/watch?v=72iEz5iopqQ
 
+- on Tailwind
+https://www.youtube.com/watch?v=K_L90oBB0qM&t=12621s
 
 
