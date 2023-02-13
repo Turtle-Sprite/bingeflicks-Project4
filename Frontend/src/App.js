@@ -32,8 +32,9 @@ function App() {
   }, []) // happen only once
 
   return (
-
-        <div className="App">
+<body>
+    <div className="page-container">
+      <div className="main">
     <Router>
       <Navbar />
       <Routes>
@@ -44,7 +45,6 @@ function App() {
         <Route path="/checkout-success" element={<CheckoutSuccess currentUser={currentUser}/>}/>
         {/* <Route path="/*" element={<NotFound />} /> */}
       </Routes>
-      <Footer />
     </Router>
 
       <h1>Hello</h1>
@@ -52,6 +52,9 @@ function App() {
       <UserLogin currentUser={currentUser} setCurrentUser={setCurrentUser}/>
       <UserSignup currentUser={currentUser} setCurrentUser={setCurrentUser}/>
     </div>
+    </div>
+      <Footer />
+  </body>
   );
 }
 

@@ -5,14 +5,13 @@ import FilmList from '../partials/FilmList'
 
 
 function Homepage({currentUser}) {
-    const [currentMovie, setCurrentMovie] = useState('63e6e6f2de15026503b30211')
+    const [currentMovie, setCurrentMovie] = useState({})
     const [films, setFilm] = useState([])
     // const navigate = useNavigate()
 
     const getFilms = async () => {
-        const films = await axios.get(`${process.env.REACT_APP_SERVER_URL}/movies`)
+        await axios.get(`${process.env.REACT_APP_SERVER_URL}/movies`)
             .then(response => {
-                console.log(response)
                 setFilm(response.data.results)
             })
             .catch(console.warn)
@@ -22,9 +21,11 @@ function Homepage({currentUser}) {
         getFilms()
       }, [])
 
-    async function handleFavorite(){
+    async function handleFavorite(filmDetails){
         try{
-            console.log("favorite!")
+            //set the movie so we know what Id we're posting to on backend
+            setCurrentMovie(filmDetails)
+            console.log("favorite!", filmDetails)
             // console.log("user", currentUser)
             const token = localStorage.getItem('jwt')
 					// make the auth headers
@@ -33,21 +34,23 @@ function Homepage({currentUser}) {
                     'Authorization': token
                 }
             }
+
+            console.log(currentMovie, "current movie")
             //POST the movie to the user's favorites array
-            await axios.post(`${process.env.REACT_APP_SERVER_URL}/movies/${currentMovie}`,{}, options)
-                    .then(response => {
-                        console.log(response)
-                        // navigate(`/movies/${response.data._id}/confirmed`)
-                    })
-                    .catch(console.warn)
+            await axios.post(`${process.env.REACT_APP_SERVER_URL}/movies/${currentMovie}`, currentMovie, options)
+                .then(response => {
+                    console.log(response)
+                    // navigate(`/movies/${response.data._id}/confirmed`)
+                })
+                .catch(console.warn)
+                
         } catch (err){
             console.log(err.response.data)
         }
     }
     return ( 
         <>
-            <FilmList films={films}/>
-            <button type="submit" onClick={handleFavorite}>Add Favorite</button>
+            <FilmList films={films} handleFavorite={handleFavorite} setCurrentMovie={setCurrentMovie}/>
         </>
      );
 }

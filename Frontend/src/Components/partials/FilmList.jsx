@@ -1,10 +1,10 @@
-function FilmList({films}) {
+function FilmList({films, handleFavorite}) {
     
-    console.log(films)
     const popfilms = films.map((film, idx) =>{
         return (
-            <div>
+            <div key={film.title}>
                 <p>{film.title}</p>
+                <button type="submit" onClick={() => handleFavorite(film)}>Add Favorite</button>
             </div>
         )
     }) 
