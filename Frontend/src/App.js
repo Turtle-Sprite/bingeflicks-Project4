@@ -2,13 +2,19 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { useState, useEffect, useMemo } from 'react'
 import jwt_decode from 'jwt-decode'
 import axios from 'axios'
-import MovieDetails from './Pages/MovieDetails'
-import UserLogin from './Pages/UserLogin'
-import UserSignup from './Pages/UserSignup'
+import MovieDetails from './Components/Pages/MovieDetails'
+import UserLogin from './Components/Pages/UserLogin'
+import UserSignup from './Components/Pages/UserSignup'
+import NotFound from './Components/Pages/NotFound'
+import Cart from './Components/Pages/Cart'
+import CheckoutSuccess from './Components/partials/CheckoutSucess'
+import Navbar from './Components/partials/Navbar'
 import './App.css';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null)
+  
+  
   useEffect(() => {
     // check to see if token is in storage
     const token = localStorage.getItem('jwt')
@@ -22,9 +28,20 @@ function App() {
   }, []) // happen only once
 
   return (
-    <div className="App">
+
+        <div className="App">
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/movies/:id" element={<MovieDetails currentUser={currentUser}/> }/>
+        <Route path="/cart" element={<Cart currentUser={currentUser}/>}/>
+        <Route path="/checkout-success" element={<CheckoutSuccess currentUser={currentUser}/>}/>
+        <Route path="/*" element={<NotFound />} />
+      </Routes>
+    </Router>
+
       <h1>Hello</h1>
-      <MovieDetails currentUser={currentUser}/>
+      
       <UserLogin currentUser={currentUser} setCurrentUser={setCurrentUser}/>
       <UserSignup currentUser={currentUser} setCurrentUser={setCurrentUser}/>
     </div>

@@ -1,13 +1,15 @@
 const router = require('express').Router()
 const db = require('../models')
+const authLockedRoute = require('./authLockedRoute')
 
-router.post('/:id/favorites', async (req, res) => {
+//////POST /movies/:id - makes favorites
+router.post('/:id', authLockedRoute, async (req, res) => {
+    // console.log(res.locals.user, "post route")
     try {
-
         //find movieID and UserId
         const foundMovie = await db.Movies.findById(req.params.id)
         const foundUser = await db.User.findOne({
-            email: res.locals.user
+            email: res.locals.user.email
           })
           console.log(foundUser)
 
@@ -16,3 +18,5 @@ router.post('/:id/favorites', async (req, res) => {
         res.status(500).json({ msg: 'Server Error' })
     }
 })
+
+module.exports = router

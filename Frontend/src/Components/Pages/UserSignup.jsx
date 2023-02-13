@@ -12,7 +12,7 @@ export default function Register({ currentUser, setCurrentUser }) {
     const handleSubmit = async e => {
 		e.preventDefault()
 		try {
-			// post fortm data to the backend
+			// post form data to the backend
 			const reqBody = {
 				fname,
 				lname,
@@ -36,7 +36,7 @@ export default function Register({ currentUser, setCurrentUser }) {
             //specific error msg
             console.log(err.response.data)
 			if (err.response) {
-				// setMsg(err.response.data.msg)
+				// setMsg(err.response.data)
 			}
 		}
 	}

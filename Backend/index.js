@@ -3,6 +3,7 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const rowdy = require('rowdy-logger')
+const stripe = require("./controllers/stripe")
 
 // config express app
 const app = express()
@@ -14,10 +15,14 @@ app.use(cors())
 // request body parsing
 app.use(express.json())
 
+//request stripe api
+app.use("/api/stripe", stripe)
+
+//set up res.locals here
 
 // controllers
 app.use('/users', require('./controllers/users.js'))
-// app.use('/movies', require('./controllers/movies.js'))
+app.use('/movies', require('./controllers/movies.js'))
 // app.use('/orders', require('./controllers/orders.js'))
 // app.use('/reviews', require('./controllers/reviews.js'))
 
