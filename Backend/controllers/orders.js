@@ -3,11 +3,11 @@ const db = require('../models')
 const authLockedRoute = require('./authLockedRoute')
 const axios = require('axios'); 
 
-router.get('/', (req,res) => {
+router.get('/', authLockedRoute, (req,res) => {
     
 })
 
-router.post('/', (req,res) => {
+router.post('/', authLockedRoute, (req,res) => {
     
 })
 

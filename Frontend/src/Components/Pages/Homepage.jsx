@@ -6,22 +6,33 @@ import FilmList from '../partials/FilmLists/PopularFilmList'
 
 function Homepage({ currentUser }) {
 
+    //TMDB films
     const [films, setFilm] = useState([])
+    //get info from db and search array for conditional rendering
     const [favoritesArray, setFavoritesArray] = useState([])
     const [errorMsg, setErrorMsg] = useState(false)
+
+    //reviews from db
+    const [reviews, setReviews] = useState([])
+    //Info for posting reviews
+    const [userReview, setUserReview] = useState({
+        title: '',
+        content: '',
+        rating: 0,
+        movieTitle: ''
+    })
+    const [avgRating, setAvgRating] = useState(0)
     // const navigate = useNavigate()
-
-
 
     //call TMDB API for current films
     const getFilmsTMDB = async () => {
         await axios.get(`${process.env.REACT_APP_SERVER_URL}/movies`)
             .then(response => {
+                console.log(response.data)
                 setFilm(response.data.results)
             })
             .catch(console.warn)
     }
-
     useEffect(() => {
         getFilmsTMDB()
     }, [])
@@ -115,18 +126,93 @@ function Homepage({ currentUser }) {
         }
     }
 
-return (
-    <>
-        <FilmList
-            currentUser={currentUser}
-            films={films}
-            handleFavorite={handleFavorite}
-            handleDeleteFavorite={handleDeleteFavorite}
-            favoritesArray={favoritesArray}
-            handleToggleFavorites={handleToggleFavorites}
-        />
-    </>
-);
+    ////GET Movie Reviews based on movie Title
+    const getReviews = async (movieTitle) => {
+        try {
+            const token = localStorage.getItem('jwt')
+            // make the auth headers
+            const options = {
+                headers: {
+                    'Authorization': token
+                }
+            }
+
+            await axios.get(`${process.env.REACT_APP_SERVER_URL}/reviews/${movieTitle}`, options)
+                .then(response => {
+                    // let responseArray = response.data.map(response => {
+                    //     return response.movieTitle
+                    // })
+                    console.log("ARRAY OF Reviews", response)
+                    setReviews(response)
+                })
+                .catch(console.warn)
+        } catch (err) {
+            console.log("Get reviews error", err)
+        }
+    }
+
+    //POST Reviews based on movie Title
+    const postReviews = async (movieTitle) => {
+        try {
+            const token = localStorage.getItem('jwt')
+            // make the auth headers
+            const options = {
+                headers: {
+                    'Authorization': token
+                }
+            }
+
+            await axios.post(`${process.env.REACT_APP_SERVER_URL}/reviews/${movieTitle}`, userReview, options)
+                .then(response => {
+                    console.log("Posted Review", response)
+                })
+                .catch(console.warn)
+
+        } catch (err) {
+            console.log("Get reviews error", err)
+        }
+    }
+
+    //DELETE Reviews based on reviewId
+    const deleteReviews = async (reviewId) => {
+        try {
+            const token = localStorage.getItem('jwt')
+            // make the auth headers
+            const options = {
+                headers: {
+                    'Authorization': token
+                }
+            }
+
+            await axios.delete(`${process.env.REACT_APP_SERVER_URL}/reviews/${reviewId}`, options)
+                .then(response => {
+                    console.log("Posted Review", response)
+                })
+                .catch(console.warn)
+
+        } catch (err) {
+            console.log("Get reviews error", err)
+        }
+    }
+
+    return (
+        <>
+            <FilmList
+                currentUser={currentUser}
+                films={films}
+                handleFavorite={handleFavorite}
+                handleDeleteFavorite={handleDeleteFavorite}
+                favoritesArray={favoritesArray}
+                handleToggleFavorites={handleToggleFavorites}
+                reviews={reviews}
+                getReviews={getReviews}
+                postReviews={postReviews}
+                deleteReviews={deleteReviews}
+                setUserReview={setUserReview}
+                userReview={userReview}
+            />
+        </>
+    );
 }
 
 export default Homepage;

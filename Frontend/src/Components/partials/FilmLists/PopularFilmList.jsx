@@ -1,6 +1,10 @@
 import { useState } from 'react'
+import AddReview from '../Reviews/AddReview'
+import { Link } from 'react-router-dom'
+import MovieDetails from '../../Pages/MovieDetails'
 
-function FilmList({ films, handleFavorite, handleDeleteFavorite, currentUser, favoritesArray, handleToggleFavorites }) {
+function FilmList({ films, handleFavorite, handleDeleteFavorite, currentUser, favoritesArray, handleToggleFavorites, reviews, getReviews, postReviews, deleteReviews, userReview, setUserReview}) {
+
     let [signInError, setSignInError] = useState('')
     let alreadyFav = false
     const popfilms = films.map((film, idx) => {
@@ -10,12 +14,13 @@ function FilmList({ films, handleFavorite, handleDeleteFavorite, currentUser, fa
             alreadyFav = false
         }
         return (
-            <div key={film.title}>
+            <div key={film.id}>
                 <p>Title: {film.title}</p>
                 <p>Description: {film.overview}</p>
                 <p>Price: </p>
                 <img src={`https://image.tmdb.org/t/p/w1280/${film.backdrop_path}`} alt={`Screenshot from the film ${film.title}`} className='pop-film-img' />
-                {/* if there is a user, they can favorite/delete movies */}
+                <Link to={`/movies/${film.title}`} element={MovieDetails}>Movie Details</Link>
+                {/* if there is a user, they can favorite/delete/review/add movies to watch list */}
                 {currentUser ?
                     (
                         <div>
@@ -32,11 +37,17 @@ function FilmList({ films, handleFavorite, handleDeleteFavorite, currentUser, fa
                                     handleFavorite(film)
                                 }}>Add Favorite</button>}
                         </div>)
-                    : <button disabled onClick={() => setSignInError('Please sign in to favorite your movies.')}>Add Favorite</button>}
-
+                        : 
+                    <div>
+                        <button disabled onClick={() => setSignInError('Please sign in to favorite your movies.')}>Add Favorite</button>
+                        <p className='error'>{signInError}</p>
+                    </div>
+                    }
             </div>
         )
     })
+
+
     return (
         <div>
             {popfilms}

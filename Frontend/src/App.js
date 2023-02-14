@@ -13,6 +13,7 @@ import Footer from './Components/partials/Footer'
 import './App.css';
 
 
+
 function App() {
   const [currentUser, setCurrentUser] = useState(null)
   const [cart, setCart] = useState([])
@@ -46,12 +47,14 @@ function App() {
         <Route path="/movies/:id" element={<MovieDetails currentUser={currentUser}/> }/>
         <Route path="/cart" element={<Cart currentUser={currentUser} cart={cart} setCart={setCart} handleAddToCart={handleAddToCart}/>}/>
         <Route path="/checkout-success" element={<CheckoutSuccess currentUser={currentUser}/>}/>
+        <Route path="/login" element={<UserLogin currentUser={currentUser} setCurrentUser={setCurrentUser}/>} />
+        <Route path="/signup" element={<UserSignup currentUser={currentUser} setCurrentUser={setCurrentUser}/>} />
         {/* <Route path="/*" element={<NotFound />} /> */}
       </Routes>
     </Router>
     
-      <UserLogin currentUser={currentUser} setCurrentUser={setCurrentUser}/>
-      <UserSignup currentUser={currentUser} setCurrentUser={setCurrentUser}/>
+      
+      
     </div>
     </div>
       <Footer />

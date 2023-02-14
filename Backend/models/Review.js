@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const ReviewSchema = new mongoose.Schema({
-    movieTitle: {
+    title: {
         type: String 
     },
     content: {

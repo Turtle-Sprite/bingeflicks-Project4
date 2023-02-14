@@ -8,7 +8,7 @@ const axios = require('axios');
 router.get('/', async (req, res) => {
     try {
         //find movieID and UserId
-        const films = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&page=5`)
+        const films = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&page=1`)
             .then(response => {
                 return response.data
             })
@@ -21,6 +21,23 @@ router.get('/', async (req, res) => {
     }
 })
 
+///GET VIDEO OF MOVIE FROM TMBD
+router.get('/:id', async (req, res) => {
+    try {
+        //find movieID and UserId
+        const films = await axios.get(`http://api.themoviedb.org/3/movie/${req.params.id}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&append_to_response=videos`)
+            .then(response => {
+                console.log(response)
+                return response.data
+            })
+            .catch(console.warn)
+        // console.log(films)
+        res.json(films)
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ msg: 'Server Error' })
+    }
+})
 
 //get favorite movies from Database
 router.get('/favorites', authLockedRoute, async (req, res) => {
