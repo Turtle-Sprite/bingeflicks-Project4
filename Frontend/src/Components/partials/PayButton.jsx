@@ -13,13 +13,11 @@ function PayButton({currentUser}) {
         cartQuantity: 2
     }]
 
-    const handleCheckout = () => {
+    const handleCheckout = async () => {
     if(!currentUser){ 
         setMessage(true)
     } else {
-        console.log('checkout begins', cartItems)
-        console.log('checkout user', currentUser)
-        axios.post(`${process.env.REACT_APP_SERVER_URL}/stripe/create-checkout-session`, {
+        await axios.post(`${process.env.REACT_APP_SERVER_URL}/stripe/create-checkout-session`, {
             cartItems, 
             userId: currentUser._id
         }).then((res) => {

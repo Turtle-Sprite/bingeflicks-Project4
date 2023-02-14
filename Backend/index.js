@@ -23,7 +23,7 @@ app.use("/stripe", stripe)
 // controllers
 app.use('/users', require('./controllers/users.js'))
 app.use('/movies', require('./controllers/movies.js'))
-// app.use('/orders', require('./controllers/orders.js'))
+app.use('/orders', require('./controllers/orders.js'))
 // app.use('/reviews', require('./controllers/reviews.js'))
 
 // hey listen

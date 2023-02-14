@@ -22,6 +22,13 @@ const MoviesSchema = new mongoose.Schema({
     TMDBId: {
         type: String
     },
+    releaseDate: {
+        type: String
+    },
+    moviePrice: {
+        type: Number
+    },
+
     userId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     reviewId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }]
 }, {
