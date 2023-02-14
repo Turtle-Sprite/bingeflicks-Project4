@@ -8,7 +8,7 @@ const axios = require('axios');
 router.get('/', async (req, res) => {
     try {
         //find movieID and UserId
-        const films = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&page=2`)
+        const films = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&page=5`)
             .then(response => {
                 return response.data
             })

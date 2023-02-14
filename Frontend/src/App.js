@@ -35,7 +35,7 @@ function App() {
   }, []) // happen only once
 
   return (
-<body>
+    <div>
     <div className="page-container">
       <div className="main">
     <Router>
@@ -55,7 +55,7 @@ function App() {
     </div>
     </div>
       <Footer />
-  </body>
+      </div>
   );
 }
 

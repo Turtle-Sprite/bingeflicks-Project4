@@ -5,11 +5,13 @@ import FilmList from '../partials/FilmLists/PopularFilmList'
 
 
 function Homepage({ currentUser }) {
-    const [alreadyFav, setAlreadyFav] = useState(false)
+
     const [films, setFilm] = useState([])
     const [favoritesArray, setFavoritesArray] = useState([])
     const [errorMsg, setErrorMsg] = useState(false)
     // const navigate = useNavigate()
+
+
 
     //call TMDB API for current films
     const getFilmsTMDB = async () => {
@@ -37,8 +39,11 @@ function Homepage({ currentUser }) {
 
             await axios.get(`${process.env.REACT_APP_SERVER_URL}/movies/favorites`, options)
                 .then(response => {
-                    console.log('favorites titles', response.data)
-                    setFavoritesArray(response.data)
+                    let responseArray = response.data.map(response => {
+                        return response.movieTitle
+                    })
+                    console.log("ARRAY OF TITLES", responseArray)
+                    setFavoritesArray(responseArray)
                 })
                 .catch(console.warn)
         } catch (err) {
@@ -48,7 +53,6 @@ function Homepage({ currentUser }) {
     useEffect(() => {
         getFavorites()
     }, [])
-
 
     ///MAKE FAVORITES
     async function handleFavorite(filmDetails) {
@@ -87,27 +91,42 @@ function Homepage({ currentUser }) {
             //DELETE the movie from the user's favorites array
             await axios.delete(`${process.env.REACT_APP_SERVER_URL}/movies/${filmDetails.title}`, options)
                 .then(response => {
-                    console.log("data from favorite's DELETE",response)
+                    console.log("data from favorite's DELETE", response)
                     // navigate(`/movies/${response.data._id}/confirmed`)
                 })
                 .catch(console.warn)
 
         } catch (err) {
             console.log(err.response.data)
-        }    
+        }
     }
 
-    return (
-        <>
-            <FilmList
-                currentUser={currentUser}
-                films={films}
-                handleFavorite={handleFavorite}
-                handleDeleteFavorite={handleDeleteFavorite} 
-                favoritesArray={favoritesArray}
-                />
-        </>
-    );
+    /////Toggle Favorites 
+    function handleToggleFavorites(filmTitle, boolean) {
+
+        let newArray = [...favoritesArray]
+        let filmIndex = newArray.indexOf(filmTitle)
+
+        if (filmIndex < 0) {
+            setFavoritesArray([...newArray, filmTitle])
+        } else {
+            newArray.splice(filmIndex, 1)
+            setFavoritesArray(newArray)
+        }
+    }
+
+return (
+    <>
+        <FilmList
+            currentUser={currentUser}
+            films={films}
+            handleFavorite={handleFavorite}
+            handleDeleteFavorite={handleDeleteFavorite}
+            favoritesArray={favoritesArray}
+            handleToggleFavorites={handleToggleFavorites}
+        />
+    </>
+);
 }
 
 export default Homepage;
