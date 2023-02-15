@@ -19,7 +19,7 @@ function PopularFilmList({ films, handleFavorite, handleDeleteFavorite, currentU
                 <p>Price: </p>
                 <img src={`https://image.tmdb.org/t/p/w1280/${film.backdrop_path}`} alt={`Screenshot from the film ${film.title}`} className='pop-film-img' />
                 <Link to={`/movies/${film.title}`}>
-                <button>See Movie Details</button>
+                    <button onClick={() => {setMovieDetails(film)}}>See Movie Details</button>
                 </Link>
                 {/* if there is a user, they can favorite/delete/review/add movies to watch list */}
                 {currentUser ?

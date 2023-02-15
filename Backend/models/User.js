@@ -27,7 +27,7 @@ const UserSchema = new mongoose.Schema({
           type: Number
         },
     },
-    reviewId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Reviews' }],
+    reviewId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
     moviesFavId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movies' }],
     orderId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Order' }],
 }, {

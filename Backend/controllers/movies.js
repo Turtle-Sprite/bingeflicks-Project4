@@ -30,14 +30,13 @@ router.get('/favorites', authLockedRoute, async (req, res) => {
             email: res.locals.user.email
         }).populate("moviesFavId")
 
+        // console.log("get favorites",foundUser.moviesFavId, "get favorites")
         res.json(foundUser.moviesFavId)
-        console.log(foundUser.moviesFavId)
     } catch (err) {
         console.log(err)
         res.status(500).json({ msg: 'Server Error' })
     }
 })
-
 
 ///GET VIDEO OF MOVIE FROM TMBD
 router.get('/:id', async (req, res) => {

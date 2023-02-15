@@ -20,7 +20,7 @@ function MovieDetails({
         await axios.get(`${process.env.REACT_APP_SERVER_URL}/movies/${movieDetails.id}`)
             .then(response => {
                 //this is where the youtube key is located
-                console.log(response.data.videos.results)
+                // console.log(response.data.videos.results)
                 setVideo(response.data.videos.results)
             })
             .catch(console.warn)

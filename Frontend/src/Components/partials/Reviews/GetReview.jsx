@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 function GetReview({ movieDetails, reviews, getReviews}) {
-    
+    console.log("getreviews", movieDetails.title)
     useEffect(()=> {
         getReviews(movieDetails.title)
     },[])
