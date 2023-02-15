@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {useState} from "react" 
-import {useSelector} from "react-redux"
-// import {url} from "../slices/api"
+
+
 
 function PayButton({currentUser}) {
     const [message, setMessage] = useState(false)
@@ -9,7 +9,7 @@ function PayButton({currentUser}) {
     const cartItems = [{
         name: 'The Expendables',
         descr: 'Mercenaries for good who are easily expendable for whoever hires them.',
-        price: 5000,
+        price: 5,
         cartQuantity: 2
     }]
 
@@ -31,7 +31,7 @@ function PayButton({currentUser}) {
     return ( 
         <>
             {message ? 
-            <p className="errorMsg"> You must be logged in to your account to checkout. </p> :
+            <p className="error"> You must be logged in to your account to checkout. </p> :
             null
             }
             <button onClick={() => handleCheckout()}>Check out</button>

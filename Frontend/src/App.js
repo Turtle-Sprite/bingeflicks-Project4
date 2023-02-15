@@ -11,7 +11,8 @@ import CheckoutSuccess from './Components/partials/CheckoutSuccess'
 import Navbar from './Components/partials/Navbar'
 import Footer from './Components/partials/Footer'
 import axios from "axios";
-import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 
 
@@ -22,7 +23,10 @@ function App() {
   const [films, setFilm] = useState([])
   //get info from db and search array for conditional rendering
   const [favoritesArray, setFavoritesArray] = useState([])
+  let [signInError, setSignInError] = useState('')
   const [errorMsg, setErrorMsg] = useState(false)
+  //sets moviedetails based on the film which rendered the "See Film Details" button
+  let [movieDetails, setMovieDetails] = useState({})
 
   //reviews from db
   const [reviews, setReviews] = useState([])
@@ -33,15 +37,40 @@ function App() {
     rating: '',
     movieTitle: ''
   })
-  // const [avgRating, setAvgRating] = useState(0)
 
-  let [signInError, setSignInError] = useState('')
+  const [cartProducts, setCartProducts] = useState([
+    {
+      movieTitle: "",
+      moviePrice: "",
+      movieGenre: "",
+    }
+  ])
 
-  //sets moviedetails based on the film which rendered the "See Film Details" button
-  let [movieDetails, setMovieDetails] = useState({})
+  //Cart movieTitle, moviePrice, movieGenre
+  function handleAddToCart(item) {
+    setCartProducts([
+      ...cartProducts,
+      {
+        movieTitle: item.movieTitle,
+        moviePrice: item.moviePrice,
+        movieGenre: item.movieGenre,
+      }
+    ])
+  }
 
-  const handleAddToCart = () => {
+  function handleDeleteFromCart(item) {
+    const newProducts = cartProducts?.filter(cartItem => {
+      return cartItem.movieTitle !== item.movieTitle
+    })
+    setCartProducts(newProducts)
+  }
 
+  function getTotalCost() {
+    let totalCost = 0
+    for (let i = 0; i < cartProducts.length; i++) {
+      totalCost = totalCost + cartProducts[i].moviePrice
+    }
+    return totalCost
   }
 
   useEffect(() => {
@@ -77,12 +106,12 @@ function App() {
       }
       console.log("get favorites invoked")
       const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/movies/favorites`, options)
-      console.log(response.data)
       let responseArray = response.data.map(response => {
         return response.movieTitle
       })
       console.log("ARRAY OF TITLES", responseArray)
-      setFavoritesArray(responseArray)
+      setFavoritesArray(...favoritesArray, responseArray)
+      console.log("favorites set array", favoritesArray)
 
     } catch (err) {
       console.log("Get favorites error", err)
@@ -220,11 +249,15 @@ function App() {
 
 
   return (
-    <div>
+    // <CartProvider>
+    <div >
       <div className="page-container">
         <div className="main">
           <Router>
             <Navbar />
+            <h1 className="text-3xl font-bold underline">
+              Hello world!
+            </h1>
             <Routes>
 
               <Route path="/" element={<Homepage
@@ -243,9 +276,12 @@ function App() {
                 handleToggleFavorites={handleToggleFavorites}
                 signInError={signInError}
                 setSignInError={setSignInError}
-                setMovieDetails={setMovieDetails} 
+                setMovieDetails={setMovieDetails}
                 getFilmsTMDB={getFilmsTMDB}
-                getFavorites={getFavorites}/>} />
+                getFavorites={getFavorites} />}
+                handleAddToCart={handleAddToCart}
+                cart={cartProducts}
+              />
 
               <Route path="/movies/:id" element={<MovieDetails
                 currentUser={currentUser}
@@ -264,13 +300,11 @@ function App() {
               {/* <Route path="/*" element={<NotFound />} /> */}
             </Routes>
           </Router>
-
-
-
         </div>
       </div>
       <Footer />
     </div>
+    // </CartProvider>
   );
 }
 

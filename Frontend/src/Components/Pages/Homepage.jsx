@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import PopularFilmList from '../partials/FilmLists/PopularFilmList'
+import PopularFilmList from './FilmLists/PopularFilmList'
 
 
 function Homepage({ currentUser,

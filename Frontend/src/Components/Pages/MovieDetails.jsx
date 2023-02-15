@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import AddReview from "../partials/Reviews/AddReview";
-import GetReview from "../partials/Reviews/GetReview";
+import AddReview from "./Reviews/AddReview";
+import GetReview from "./Reviews/GetReview";
 
 function MovieDetails({ 
     currentUser, 
@@ -52,11 +52,11 @@ function MovieDetails({
                 userReview={userReview}
                 movieDetails={movieDetails}
             />
-            <GetReview 
+            {/* <GetReview 
                 movieDetails={movieDetails}
                 reviews={reviews}
                 getReviews={getReviews}
-            />
+            /> */}
         </>
     );
 }

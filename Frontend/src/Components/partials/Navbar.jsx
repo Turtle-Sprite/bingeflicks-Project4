@@ -1,33 +1,34 @@
-import {Link} from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
+import { HiShoppingBag } from "react-icons/hi2";
 
 function Navbar() {
-    return ( 
-        <nav className="nav-bar"> 
-        <Link to="/">
-            <h2>Rent Movies</h2>
-        </Link>
-        <Link to="/login">
-            <h2>Login</h2>
-        </Link>
-        <Link to="/signup">
-            <h2>Sign up</h2>
-        </Link>
+    return (
+        <nav className="nav-bar shadow-md sticky top-0 z-20 w-full">
+            <div className="container md:flex bg-white py-4">
+                <div className="col-span-3 font-medium text-sm hidden xl:gap-14 2xl:gap-20 justify-between lg:flex xl-justify-end items-center">
+                    <NavLink to="/">
+                        <h2>Rent Movies</h2>
+                    </NavLink>
+                    <NavLink to="/login">
+                        <h2>Login</h2>
+                    </NavLink>
+                    <NavLink to="/signup">
+                        <h2>Sign up</h2>
+                    </NavLink>
 
-
-
-        <Link to='/cart'>
-            <div className="nav-bar">
-                {/* Shopping bag */}
-                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" className="bi bi-bag-fill" viewBox="0 0 16 16">
-                <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5z"/>
-                </svg>
-                <span className="bag-quantity"> 
-                    <span>0</span>
-                </span>
+                    <NavLink to='/cart'>
+                        <div className="nav-bar">
+                            {/* Shopping bag */}
+                            <HiShoppingBag className='w-12 h-12'/>
+                            <span className="bag-quantity">
+                                <span>0</span>
+                            </span>
+                        </div>
+                    </NavLink>
+                </div>
             </div>
-        </Link>
         </nav>
-     );
+    );
 }
 
 export default Navbar;

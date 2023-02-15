@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import axios from 'axios'
 import jwt_decode from 'jwt-decode'
+import { Form, Col, Row, Container } from 'react-bootstrap';
 
 
 export default function Login({ currentUser, setCurrentUser }) {
     const [email, setEmail] = useState('')
-	const [password, setPassword] = useState('')
-    
+    const [password, setPassword] = useState('')
+
     // submit event handler for login
     const handleSubmit = async e => {
         e.preventDefault()
@@ -38,17 +39,22 @@ export default function Login({ currentUser, setCurrentUser }) {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input 
-            type="email" 
-            onChange={e => setEmail(e.target.value)}
-            value={email}/>
-
-            <input 
-            type="password" 
-            onChange={e => setPassword(e.target.value)}
-            value={password}/>
-            <button type="submit"> Login </button>
-        </form>
+        <Container>
+            <Col sm={12} md={6} lg={5}>
+            <Form onSubmit={handleSubmit}>
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                    type="email"
+                    onChange={e => setEmail(e.target.value)}
+                    value={email} />
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                    type="password"
+                    onChange={e => setPassword(e.target.value)}
+                    value={password} />
+                <button type="submit"> Login </button>
+            </Form>
+                </Col>
+        </Container>
     )
 }
