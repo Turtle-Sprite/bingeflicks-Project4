@@ -1,25 +1,26 @@
-import { useState } from 'react'
-import AddReview from '../Reviews/AddReview'
-import { Link } from 'react-router-dom'
-import MovieDetails from '../../Pages/MovieDetails'
+import { Link } from "react-router-dom"
 
-function FilmList({ films, handleFavorite, handleDeleteFavorite, currentUser, favoritesArray, handleToggleFavorites, reviews, getReviews, postReviews, deleteReviews, userReview, setUserReview}) {
+function PopularFilmList({ films, handleFavorite, handleDeleteFavorite, currentUser, favoritesArray, handleToggleFavorites, reviews, signInError, setSignInError, setRenderMovieDetails, setMovieDetails}) {
 
-    let [signInError, setSignInError] = useState('')
     let alreadyFav = false
+
+    //map through all films and make a simple film card with data. 
     const popfilms = films.map((film, idx) => {
         if (favoritesArray.includes(film.title)) {
             alreadyFav = true
         } else {
             alreadyFav = false
         }
+
         return (
             <div key={film.id}>
                 <p>Title: {film.title}</p>
                 <p>Description: {film.overview}</p>
                 <p>Price: </p>
                 <img src={`https://image.tmdb.org/t/p/w1280/${film.backdrop_path}`} alt={`Screenshot from the film ${film.title}`} className='pop-film-img' />
-                <Link to={`/movies/${film.title}`} element={MovieDetails}>Movie Details</Link>
+                <Link to={`/movies/${film.title}`}>
+                <button>See Movie Details</button>
+                </Link>
                 {/* if there is a user, they can favorite/delete/review/add movies to watch list */}
                 {currentUser ?
                     (
@@ -55,4 +56,4 @@ function FilmList({ films, handleFavorite, handleDeleteFavorite, currentUser, fa
     );
 }
 
-export default FilmList;
+export default PopularFilmList;

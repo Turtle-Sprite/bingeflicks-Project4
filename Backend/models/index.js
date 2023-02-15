@@ -1,9 +1,12 @@
 const mongoose = require('mongoose')
 //create a mongodb URI and tell mongoose to connect to it
-const dbName = 'bingeFlicks'
-const uri = 'mongodb://127.0.0.1/' + dbName
-console.log(uri)
-mongoose.connect(uri)
+mongoose.connect(process.env.MONGODB_URI)
+    .then (()=> {
+        console.log('listening to db')
+    })
+    .catch((error) => {
+        console.log(error)
+    })
 
 //use mongoose's connections methodsto validate the dbconnection and do some useful console.logs
 const db = mongoose.connection

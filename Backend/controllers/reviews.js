@@ -9,6 +9,7 @@ router.get('/:id', async (req,res) => {
         const foundMovie = await db.Movies.find({
             movieTitle: req.params.id
         }).populate("reviewId")
+        console.log("get reviews: ", " params:", req.params.id, "foundmovie reviews", foundMovie.reviewId)
 
         res.json(foundMovie.reviewId)
     }catch(err) {
@@ -17,8 +18,9 @@ router.get('/:id', async (req,res) => {
 })
 
 //POST for creating Reviews
-router.post('/', authLockedRoute, async (req,res) => {
+router.post('/:id', authLockedRoute, async (req,res) => {
     try{
+
         const foundUser = await db.User.findOne({
             email: res.locals.user.email
         })
@@ -28,9 +30,8 @@ router.post('/', authLockedRoute, async (req,res) => {
         })
     
         const newReview = await db.Review.findOneAndUpdate(
-            { userId: foundUser._id },
+            { title: req.body.title },
             {
-                title: req.body.title,
                 content: req.body.content,
                 rating: req.body.rating,
                 userId: foundUser._id,
@@ -38,7 +39,7 @@ router.post('/', authLockedRoute, async (req,res) => {
             },
             { new: true, upsert: true }
         )
-    
+        console.log
         //users array update
         foundUser.reviewId.push(newReview._id)
         
