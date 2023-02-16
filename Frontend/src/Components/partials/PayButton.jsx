@@ -1,8 +1,6 @@
 import axios from 'axios'
 import {useState} from "react" 
 
-
-
 function PayButton({currentUser}) {
     const [message, setMessage] = useState(false)
 
@@ -34,7 +32,7 @@ function PayButton({currentUser}) {
             <p className="error"> You must be logged in to your account to checkout. </p> :
             null
             }
-            <button onClick={() => handleCheckout()}>Check out</button>
+            <button type="submit" onClick={() => handleCheckout()}>Check out</button>
         </>
      );
 }

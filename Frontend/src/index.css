@@ -5,48 +5,66 @@
 
 .page-container {
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  min-height: 100%;
-  background-color: #4D194D;
+  min-height: 100vh;
+  width: 100vw;
+  background-color: #272640;
   color:aliceblue;
   @apply items-center
+}
+
+.cardCss {
+  background-color: #144552;
+  border-radius: 15px;
+  max-width: 200px;
+  max-height: 400px;
+  @apply flex shadow-lg m-7 p-3
+}
+
+.link {
+  text-decoration: none;
+  list-style: none;
 }
 
 button[type=submit] {
   border: 2px solid #144552; 
   background-color: #006466;
   color: white;
-  @apply flex justify-between items-center px-2 py-1 rounded
+  @apply flex justify-between items-center px-4 py-2 rounded hover:bg-teal-700 bg-teal-800 hover:text-gray-400 mt-2
 }
 
 .main {
   margin: 0 auto;
   overflow: auto;
   padding-bottom: 100px;
-  width: 90vw;
+  width: 100vw;
   min-height: 100vh;
 }
 
 .footer {
   text-align: center;
-  background: blue;
   position: relative;
   padding-top: 20px;
   height: 100px;
   bottom: 0;
   width: 100%;
   clear: both;
+  @apply bg-amber-500
 }
-.container {
-  
+.flexContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baselne;
 }
 .row {
   display: flex;
 }
 
-.col {
-
+.col-ends {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .pop-film-img {

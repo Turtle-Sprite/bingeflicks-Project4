@@ -21,8 +21,9 @@ function App() {
   const [cart, setCart] = useState([])
   //TMDB films
   const [films, setFilm] = useState([])
-  //get info from db and search array for conditional rendering
-  const [favoritesArray, setFavoritesArray] = useState([])
+  //get info from db and search fav array for conditional rendering
+  const [favoritesArray, setFavoritesArray] = useState([]) //titles only
+  const [favoritesDetails, setFavoritesDetails] = useState([]) //all info
   let [signInError, setSignInError] = useState('')
   const [errorMsg, setErrorMsg] = useState(false)
   //sets moviedetails based on the film which rendered the "See Film Details" button
@@ -104,15 +105,13 @@ function App() {
           'Authorization': token
         }
       }
-      console.log("get favorites invoked")
       const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/movies/favorites`, options)
       let responseArray = response.data.map(response => {
         return response.movieTitle
       })
-      console.log("ARRAY OF TITLES", responseArray)
+      setFavoritesDetails(...favoritesDetails, response.data)
       setFavoritesArray(...favoritesArray, responseArray)
-      console.log("favorites set array", favoritesArray)
-
+      console.log("get favorites invoked", favoritesDetails)
     } catch (err) {
       console.log("Get favorites error", err)
     }
@@ -249,17 +248,12 @@ function App() {
 
 
   return (
-    // <CartProvider>
-    <div >
+    <div>
       <div className="page-container">
         <div className="main">
           <Router>
-            <Navbar />
-            <h1 className="text-3xl font-bold underline">
-              Hello world!
-            </h1>
+            <Navbar currentUser={currentUser} />
             <Routes>
-
               <Route path="/" element={<Homepage
                 currentUser={currentUser}
                 postReviews={postReviews}
@@ -281,6 +275,7 @@ function App() {
                 getFavorites={getFavorites} />}
                 handleAddToCart={handleAddToCart}
                 cart={cartProducts}
+                favoritesDetails={favoritesDetails}
               />
 
               <Route path="/movies/:id" element={<MovieDetails
@@ -293,6 +288,7 @@ function App() {
                 deleteReviews={deleteReviews}
                 reviews={reviews}
               />} />
+              
               <Route path="/cart" element={<Cart currentUser={currentUser} cart={cart} setCart={setCart} handleAddToCart={handleAddToCart} />} />
               <Route path="/checkout-success" element={<CheckoutSuccess currentUser={currentUser} />} />
               <Route path="/login" element={<UserLogin currentUser={currentUser} setCurrentUser={setCurrentUser} />} />
@@ -301,10 +297,9 @@ function App() {
             </Routes>
           </Router>
         </div>
-      </div>
+    </div>
       <Footer />
     </div>
-    // </CartProvider>
   );
 }
 

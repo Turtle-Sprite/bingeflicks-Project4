@@ -1,34 +1,55 @@
 import { NavLink, Link } from 'react-router-dom'
 import { HiShoppingBag } from "react-icons/hi2";
+import { BiMoviePlay } from "react-icons/bi"
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 
-function Navbar() {
+function NavbarNav({currentUser}) {
+
+
     return (
-        <nav className="nav-bar shadow-md sticky top-0 z-20 w-full">
-            <div className="container md:flex bg-white py-4">
-                <div className="col-span-3 font-medium text-sm hidden xl:gap-14 2xl:gap-20 justify-between lg:flex xl-justify-end items-center">
-                    <NavLink to="/">
-                        <h2>Rent Movies</h2>
-                    </NavLink>
-                    <NavLink to="/login">
-                        <h2>Login</h2>
-                    </NavLink>
-                    <NavLink to="/signup">
-                        <h2>Sign up</h2>
-                    </NavLink>
-
-                    <NavLink to='/cart'>
-                        <div className="nav-bar">
-                            {/* Shopping bag */}
-                            <HiShoppingBag className='w-12 h-12'/>
-                            <span className="bag-quantity">
-                                <span>0</span>
-                            </span>
-                        </div>
-                    </NavLink>
+        <Navbar className="md:flex bg-amber-500">
+            <Navbar.Brand>
+                <div className='ml-4 font-bold text-2xl flex items-center text-violet-900'>
+                    <BiMoviePlay />
+                    BingeFlicks
                 </div>
-            </div>
-        </nav>
+            </Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+                <Nav className="me-auto">
+                    <Nav.Link href="/">
+                        <p className="text-gray-800 hover:text-gray-400 duration-500 link text-xl">Rent Movies</p>
+                    </Nav.Link>
+
+                    {currentUser ?
+                    <div className='col-ends'>
+                    <Nav.Link href="/logout" className="text-gray-800 hover:text-gray-400 duration-500 link">
+                        <button type="submit"> Logout </button>
+                    </Nav.Link>
+                    </div>
+                    :
+                    <div>
+                    <Nav.Link href="/login" className="text-gray-800 hover:text-gray-400 duration-500 link">
+                        <button type="submit"> Login </button>
+                    </Nav.Link>
+
+                    <Nav.Link href="/signup" className="text-gray-800 hover:text-gray-400 duration-500 link">
+                        <button type='submit'>Sign up</button>
+                    </Nav.Link>
+                    </div>
+                    }
+                    <Nav.Link href='/cart' className="text-gray-800 hover:text-gray-400 duration-500 link col-ends">
+
+                        {/* Shopping bag */}
+                        <HiShoppingBag className='w-10 h-10 text-violet-900 hover:text-violet-700 duration-500 col-ends' />
+
+                    </Nav.Link>
+
+                </Nav>
+            </Navbar.Collapse>
+        </Navbar>
     );
 }
 
-export default Navbar;
+export default NavbarNav;

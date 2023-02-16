@@ -1,10 +1,8 @@
 import { Link } from "react-router-dom"
-// import { CartContext } from "../../context/CartContext"
-// import { useContext, useState } from "react"
-import { useState } from "react"
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { Card, Button } from "react-bootstrap";
 
-function PopularFilmList({ films, handleFavorite, handleDeleteFavorite, currentUser, favoritesArray, handleToggleFavorites, reviews, signInError, setSignInError, setRenderMovieDetails, setMovieDetails, handleAddToCart, cart, handleDeleteFromCart}) {
+function PopularFilmList({ films, handleFavorite, handleDeleteFavorite, currentUser, favoritesArray, handleToggleFavorites, reviews, signInError, setSignInError, setRenderMovieDetails, setMovieDetails, handleAddToCart, cart, handleDeleteFromCart }) {
     let moviePrice = 9.99
     let alreadyFav = false
     // let inCart = false
@@ -30,51 +28,47 @@ function PopularFilmList({ films, handleFavorite, handleDeleteFavorite, currentU
         // }
 
         return (
-            <div className=" " key={film.id}>
-                <p>Title: {film.title}</p>
-                <p>Description: {film.overview}</p>
-                <p>Price: {moviePrice} </p>
-                <img src={`https://image.tmdb.org/t/p/w1280/${film.backdrop_path}`} alt={`Screenshot from the film ${film.title}`} className='pop-film-img' />
-                <Link to={`/movies/${film.title}`}>
-                    <button type="submit" onClick={() => {setMovieDetails(film)}}>See Movie Details</button>
-                </Link>
-                {/* render button if in cart, or not in cart */}
-                {/* {inCart ? */}
-                {/* // <button onClick={deleteFromCart}>Delete from Cart</button> :
-                // <button onClick={addOneToCart}>Add to cart</button>} */}
-                {/* if there is a user, they can favorite/delete/review/add movies to watch list */}
-                {currentUser ?
-                    (
+            <Card key={idx} style={{ maxWidth: "350px", color: "slategrey", maxHeight: "350px", overflow: "scroll" }} className="m-3 hover:opacity-3">
+                <Card.Img variant="top" src={`https://image.tmdb.org/t/p/w1280/${film.backdrop_path}`} alt={`Screenshot from the film ${film.title}`} className='pop-film-img' />
+                <Card.Body>
+                    {currentUser ?
+                        (
+                            <div>
+                                {alreadyFav ?
+                                    <AiFillHeart className="w-8 h-8 fill-red-500" type="submit" onClick={() => {
+                                        handleToggleFavorites(film.title, false)
+                                        handleDeleteFavorite(film)
+                                    }} /> :
+
+                                    <AiOutlineHeart className="w-8 h-8 stroke-red-500 stroke-2" type="submit" onClick={() => {
+                                        handleToggleFavorites(film.title, true)
+                                        handleFavorite(film)
+                                    }} />}
+                            </div>
+                        )
+                        :
                         <div>
-                            {/* conditional rendering of buttons based on if film is already a Fav */}
-                            {alreadyFav ?
-
-                                <AiFillHeart className="w-8 h-8 fill-red-500" type="submit" onClick={() => {
-                                    handleToggleFavorites(film.title, false)
-                                    handleDeleteFavorite(film)
-                                }} />:
-
-                                <AiOutlineHeart className="w-8 h-8 stroke-red-500 stroke-2" type="submit" onClick={() => {
-                                    handleToggleFavorites(film.title, true)
-                                    handleFavorite(film)
-                                }} />}
-                        </div>)
-                        : 
-                    <div>
-                        <button disabled onClick={() => setSignInError('Please sign in to favorite your movies.')}>Add Favorite</button>
-                        <p className='error'>{signInError}</p>
-                    </div>
+                            <button onClick={() => setSignInError('Please sign in to favorite movies.')}>Add Favorite</button>
+                            <p className='error'>{signInError}</p>
+                        </div>
                     }
-            </div>
-        )
+                    <Card.Title style={{ color: "black" }} >{film.title}</Card.Title>
+                    <Card.Text>
+                        Description: {film.overview}
+                    </Card.Text>
+                    <Card.Text style={{ color: "black" }}>Price: $ {moviePrice}</Card.Text>
+                    <Link to={`/movies/${film.title}`}>
+                        <button type="submit" onClick={() => { setMovieDetails(film) }}>See Movie Details</button>
+                    </Link>
+                </Card.Body>
+            </Card >)
     })
 
-
     return (
-        <div>
+        <>
+        <p>{signInError}</p>
             {popfilms}
-        </div>
+        </>
     );
 }
-
 export default PopularFilmList;

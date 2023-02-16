@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-
+import HomeCarousel from "./FilmLists/HomeCarousel";
 import PopularFilmList from './FilmLists/PopularFilmList'
+import { Container } from "react-bootstrap";
+import FavoritesList from "./FilmLists/FavoritesList";
 
 
 function Homepage({ currentUser,
@@ -17,11 +19,13 @@ function Homepage({ currentUser,
     userReview,
     signInError,
     setSignInError,
-    setMovieDetails, 
+    setMovieDetails,
     getFilmsTMDB,
-    getFavorites
+    getFavorites,
+    favoritesDetails
 }) {
 
+    console.log("favorites details in Homepage", favoritesDetails)
     useEffect(() => {
         getFilmsTMDB()
         getFavorites()
@@ -29,23 +33,43 @@ function Homepage({ currentUser,
 
     return (
         <>
-            <PopularFilmList
-                currentUser={currentUser}
-                films={films}
+            <div>
+                <HomeCarousel
+                    currentUser={currentUser}
+                    films={films}
+                />
+            </div>
+
+            <div className="flexContainer">
+                <PopularFilmList
+                    currentUser={currentUser}
+                    films={films}
+                    handleFavorite={handleFavorite}
+                    handleDeleteFavorite={handleDeleteFavorite}
+                    favoritesArray={favoritesArray}
+                    handleToggleFavorites={handleToggleFavorites}
+                    reviews={reviews}
+                    getReviews={getReviews}
+                    postReviews={postReviews}
+                    deleteReviews={deleteReviews}
+                    setUserReview={setUserReview}
+                    userReview={userReview}
+                    signInError={signInError}
+                    setSignInError={setSignInError}
+                    setMovieDetails={setMovieDetails}
+                />
+            </div>
+            { currentUser ?
+            <FavoritesList 
+                favoritesDetails={favoritesDetails}
+                favoritesArray={favoritesArray}
                 handleFavorite={handleFavorite}
                 handleDeleteFavorite={handleDeleteFavorite}
-                favoritesArray={favoritesArray}
                 handleToggleFavorites={handleToggleFavorites}
-                reviews={reviews}
-                getReviews={getReviews}
-                postReviews={postReviews}
-                deleteReviews={deleteReviews}
-                setUserReview={setUserReview}
-                userReview={userReview}
-                signInError={signInError}
-                setSignInError={setSignInError}
                 setMovieDetails={setMovieDetails}
             />
+            : null
+            }
         </>
     );
 }
