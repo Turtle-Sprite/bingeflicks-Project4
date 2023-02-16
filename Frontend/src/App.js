@@ -22,9 +22,8 @@ function App() {
   //TMDB films
   const [films, setFilm] = useState([])
   //get info from db and search fav array for conditional rendering
-  const [favoritesArray, setFavoritesArray] = useState([]) //titles only
-  const [favoritesDetails, setFavoritesDetails] = useState([]) //all info
-  let [signInError, setSignInError] = useState('')
+  const [favoritesArray, setFavoritesArray] = useState([]) 
+   let [signInError, setSignInError] = useState('')
   const [errorMsg, setErrorMsg] = useState(false)
   //sets moviedetails based on the film which rendered the "See Film Details" button
   let [movieDetails, setMovieDetails] = useState({})
@@ -86,6 +85,17 @@ function App() {
     }
   }, []) // happen only once
 
+    // event handler to log the user out when needed
+  const handleLogout = () => {
+      // check to see if a token exists in local storage
+      if (localStorage.getItem('jwt')) {
+        // if so, delete it
+        localStorage.removeItem('jwt')
+        // set the user in the App state to be null
+        setCurrentUser(null)
+      }
+  }
+
   //call TMDB API for current films
   const getFilmsTMDB = async () => {
     await axios.get(`${process.env.REACT_APP_SERVER_URL}/movies`)
@@ -106,12 +116,8 @@ function App() {
         }
       }
       const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/movies/favorites`, options)
-      let responseArray = response.data.map(response => {
-        return response.movieTitle
-      })
-      setFavoritesDetails(...favoritesDetails, response.data)
-      setFavoritesArray(...favoritesArray, responseArray)
-      console.log("get favorites invoked", favoritesDetails)
+      
+      setFavoritesArray(...favoritesArray, response.data)
     } catch (err) {
       console.log("Get favorites error", err)
     }
@@ -252,7 +258,7 @@ function App() {
       <div className="page-container">
         <div className="main">
           <Router>
-            <Navbar currentUser={currentUser} />
+            <Navbar currentUser={currentUser} handleLogout={handleLogout}/>
             <Routes>
               <Route path="/" element={<Homepage
                 currentUser={currentUser}
@@ -275,7 +281,6 @@ function App() {
                 getFavorites={getFavorites} />}
                 handleAddToCart={handleAddToCart}
                 cart={cartProducts}
-                favoritesDetails={favoritesDetails}
               />
 
               <Route path="/movies/:id" element={<MovieDetails

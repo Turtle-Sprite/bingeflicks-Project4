@@ -27,7 +27,6 @@
 
 ## MVP GOALS
 
-- Create an account page with user information.
 - Have scrolling movies for users to choose from on landing page.
 - Create individual movie details pages with the ability to buy, favorite or "watch".
 - Create a database/API in MongoDB with user information, favorites, watch later lists, and orders.

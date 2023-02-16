@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import HomeCarousel from "./FilmLists/HomeCarousel";
 import PopularFilmList from './FilmLists/PopularFilmList'
-import { Container } from "react-bootstrap";
 import FavoritesList from "./FilmLists/FavoritesList";
 
 
@@ -21,11 +20,10 @@ function Homepage({ currentUser,
     setSignInError,
     setMovieDetails,
     getFilmsTMDB,
-    getFavorites,
-    favoritesDetails
+    getFavorites
 }) {
 
-    console.log("favorites details in Homepage", favoritesDetails)
+
     useEffect(() => {
         getFilmsTMDB()
         getFavorites()
@@ -59,16 +57,19 @@ function Homepage({ currentUser,
                     setMovieDetails={setMovieDetails}
                 />
             </div>
-            { currentUser ?
-            <FavoritesList 
-                favoritesDetails={favoritesDetails}
-                favoritesArray={favoritesArray}
-                handleFavorite={handleFavorite}
-                handleDeleteFavorite={handleDeleteFavorite}
-                handleToggleFavorites={handleToggleFavorites}
-                setMovieDetails={setMovieDetails}
-            />
-            : null
+            {currentUser ?
+            <>
+                <h2>Watch your favorites again!</h2>
+                <FavoritesList
+                    favoritesArray={favoritesArray}
+                    handleFavorite={handleFavorite}
+                    handleDeleteFavorite={handleDeleteFavorite}
+                    handleToggleFavorites={handleToggleFavorites}
+                    setMovieDetails={setMovieDetails}
+                    
+                />
+            </>
+                : null
             }
         </>
     );

@@ -4,7 +4,7 @@ import { BiMoviePlay } from "react-icons/bi"
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
-function NavbarNav({currentUser}) {
+function NavbarNav({currentUser, handleLogout}) {
 
 
     return (
@@ -24,8 +24,8 @@ function NavbarNav({currentUser}) {
 
                     {currentUser ?
                     <div className='col-ends'>
-                    <Nav.Link href="/logout" className="text-gray-800 hover:text-gray-400 duration-500 link">
-                        <button type="submit"> Logout </button>
+                    <Nav.Link href="/" className="text-gray-800 hover:text-gray-400 duration-500 link">
+                        <button type="submit" onClick={() => handleLogout()}> Logout </button>
                     </Nav.Link>
                     </div>
                     :

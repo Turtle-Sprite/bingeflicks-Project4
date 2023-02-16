@@ -8,9 +8,13 @@ function PopularFilmList({ films, handleFavorite, handleDeleteFavorite, currentU
     // let inCart = false
     // console.log("Popular films favorites", favoritesArray)
 
+    //map through all films and make aray of titles
+    let responseArray = favoritesArray.map(response => {
+        return response.movieTitle
+    })
     //map through all films and make a simple film card with data. 
     const popfilms = films.map((film, idx) => {
-        if (favoritesArray.includes(film.title)) {
+        if (responseArray.includes(film.title)) {
             alreadyFav = true
         } else {
             alreadyFav = false
