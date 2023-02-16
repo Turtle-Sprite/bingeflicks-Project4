@@ -23,7 +23,6 @@
 - As a user, I want confirmation of my placed order.
 - As a user, I want to search for movies.
 - As a user, I want to like, add to watch later lists, and leave reviews for movies.
-- As a user, I want to update or cancel my order information.
 
 ## MVP GOALS
 
