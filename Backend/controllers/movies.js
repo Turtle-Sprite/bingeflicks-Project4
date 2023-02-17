@@ -7,14 +7,11 @@ const axios = require('axios');
 //get movies from TMDB
 router.get('/', async (req, res) => {
     try {
-        //find movieID and UserId
-        const films = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&page=1`)
-            .then(response => {
-                return response.data
-            })
-            .catch(console.warn)
-        // console.log(films)
-        res.json(films)
+        const films = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&page=4`)
+        console.log(films.data)
+        res.json(films.data)
+
+
     } catch (err) {
         console.log(err)
         res.status(500).json({ msg: 'Server Error' })
@@ -30,7 +27,6 @@ router.get('/favorites', authLockedRoute, async (req, res) => {
             email: res.locals.user.email
         }).populate("moviesFavId")
 
-        // console.log("get favorites",foundUser.moviesFavId, "get favorites")
         res.json(foundUser.moviesFavId)
     } catch (err) {
         console.log(err)
@@ -39,17 +35,12 @@ router.get('/favorites', authLockedRoute, async (req, res) => {
 })
 
 ///GET VIDEO OF MOVIE FROM TMBD
-router.get('/:id', async (req, res) => {
+router.get('/:id/video', async (req, res) => {
     try {
         //find movieID and UserId
-        const films = await axios.get(`http://api.themoviedb.org/3/movie/${req.params.id}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&append_to_response=videos`)
-            .then(response => {
-                // console.log(response)
-                return response.data
-            })
-            .catch(console.warn)
-        // console.log(films)
-        res.json(films)
+        const response = await axios.get(`http://api.themoviedb.org/3/movie/${req.params.id}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&append_to_response=videos`)
+
+        res.json(response.data)
     } catch (err) {
         console.log(err)
         res.status(500).json({ msg: 'Server Error' })
@@ -91,7 +82,6 @@ router.post('/:id', authLockedRoute, async (req, res) => {
 
 //////DELETE /movies/:id - take favorites off list
 router.delete('/:id', authLockedRoute, async (req, res) => {
-    // console.log(req.params, "DELETE")
     try {
 
         const foundUser = await db.User.findOne({
@@ -102,16 +92,14 @@ router.delete('/:id', authLockedRoute, async (req, res) => {
             { movieTitle: req.params.id })
 
         if (newMovie._id) {
-            //remove from array 
-            // console.log(newMovie)
-            // console.log(foundUser)
+
             foundUser.moviesFavId.remove(newMovie._id)
             newMovie.userId.remove(foundUser._id)
             
             //Need to save the removed arrays here
             await foundUser.save()
             await newMovie.save()
-            // console.log(foundUser)
+
 
         } else {
             const msg = "No favorites to remove"

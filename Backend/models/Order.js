@@ -10,6 +10,9 @@ const OrderSchema = new mongoose.Schema({
     movieGenre: {
         type: String 
     },
+    TMDBId: {
+        type: String 
+    },
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 }, {
     timestamps: true 

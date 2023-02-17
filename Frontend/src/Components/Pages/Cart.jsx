@@ -1,14 +1,14 @@
 import PayButton from '../../Components/partials/PayButton'
 
 //inherits from app.js
-function Cart({currentUser, cart, setCart, handleAddToCart}) {
+function Cart({currentUser, cartProducts, handleAddToCart, handleDeleteFromCart}) {
 
 
     return ( 
         <>
             <div className='cart-container'>
 
-                <PayButton cartItem = {cart} currentUser={currentUser} />
+                <PayButton cartProducts = {cartProducts} currentUser={currentUser} />
             </div>
         </>
      );

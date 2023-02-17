@@ -4,16 +4,16 @@ import { Card, Button } from "react-bootstrap";
 
 function PopularFilmList({ films, handleFavorite, handleDeleteFavorite, currentUser, favoritesArray, handleToggleFavorites, reviews, signInError, setSignInError, setRenderMovieDetails, setMovieDetails, handleAddToCart, cart, handleDeleteFromCart }) {
     let moviePrice = 9.99
-    let alreadyFav = false
     // let inCart = false
-    // console.log("Popular films favorites", favoritesArray)
-
+    
     //map through all films and make aray of titles
     let responseArray = favoritesArray.map(response => {
         return response.movieTitle
     })
     //map through all films and make a simple film card with data. 
     const popfilms = films.map((film, idx) => {
+        let alreadyFav = false
+        //check if favorites or not
         if (responseArray.includes(film.title)) {
             alreadyFav = true
         } else {
@@ -30,7 +30,7 @@ function PopularFilmList({ films, handleFavorite, handleDeleteFavorite, currentU
         // } else {
         //     inCart = false
         // }
-
+        // console.log(`https://image.tmdb.org/t/p/w1280/${film.backdrop_path}`)
         return (
             <Card key={idx} style={{ maxWidth: "350px", color: "slategrey", maxHeight: "350px", overflow: "scroll" }} className="m-3 hover:opacity-3">
                 <Card.Img variant="top" src={`https://image.tmdb.org/t/p/w1280/${film.backdrop_path}`} alt={`Screenshot from the film ${film.title}`} className='pop-film-img' />
@@ -40,12 +40,11 @@ function PopularFilmList({ films, handleFavorite, handleDeleteFavorite, currentU
                             <div>
                                 {alreadyFav ?
                                     <AiFillHeart className="w-8 h-8 fill-red-500" type="submit" onClick={() => {
-                                        handleToggleFavorites(film.title, false)
+
                                         handleDeleteFavorite(film)
                                     }} /> :
 
-                                    <AiOutlineHeart className="w-8 h-8 stroke-red-500 stroke-2" type="submit" onClick={() => {
-                                        handleToggleFavorites(film.title, true)
+                                    <AiOutlineHeart className="w-8 h-8 stroke-red-500 stroke-2" type="submit" onClick={() => {                                    
                                         handleFavorite(film)
                                     }} />}
                             </div>

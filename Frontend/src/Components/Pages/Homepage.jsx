@@ -35,6 +35,7 @@ function Homepage({ currentUser,
                 <HomeCarousel
                     currentUser={currentUser}
                     films={films}
+                    setMovieDetails={setMovieDetails}
                 />
             </div>
 

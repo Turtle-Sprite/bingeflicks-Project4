@@ -4,12 +4,11 @@ const authLockedRoute = require('./authLockedRoute')
 const axios = require('axios'); 
 
 ////GET for MovieDetails/reviews
-router.get('/:id', async (req,res) => {
+router.get('/:title', async (req,res) => {
     try{
-        const foundMovie = await db.Movies.find({
-            movieTitle: req.params.id
+        const foundMovie = await db.Movies.findOne({
+            movieTitle: req.params.title
         }).populate("reviewId")
-        console.log("get reviews: ", " params:", req.params.id, "foundmovie reviews", foundMovie.reviewId)
 
         res.json(foundMovie.reviewId)
     }catch(err) {
@@ -39,7 +38,6 @@ router.post('/:id', authLockedRoute, async (req,res) => {
             },
             { new: true, upsert: true }
         )
-        console.log
         //users array update
         foundUser.reviewId.push(newReview._id)
         
@@ -88,7 +86,7 @@ router.delete('/:id', authLockedRoute, async (req,res) => {
             //Need to save the removed arrays here
             await foundUser.save()
             await foundMovie.save()
-            // console.log(foundUser)
+
             //remove review
             const wasDeleted = await db.Review.findOneAndDelete({
                 _id: deleteReview._id

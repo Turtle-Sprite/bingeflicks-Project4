@@ -3,8 +3,9 @@ import axios from "axios";
 import AddReview from "./Reviews/AddReview";
 import GetReview from "./Reviews/GetReview";
 import { Card, Button } from "react-bootstrap";
+import PayButton from "../partials/PayButton";
 
-function MovieDetails({
+function TMDBMovieDetails({
     currentUser,
     postReviews,
     setUserReview,
@@ -12,20 +13,24 @@ function MovieDetails({
     movieDetails,
     getReviews,
     deleteReviews,
-    reviews
+    reviews,
+    handleAddToCart,
+    cartProducts, 
+    handleDeleteFromCart
 }) {
 
-    const [videos, setVideo] = useState([])
+     const [videos, setVideo] = useState([])
     //call TMDB API for current films
     const getFilmsTMDB = async () => {
-        await axios.get(`${process.env.REACT_APP_SERVER_URL}/movies/${movieDetails.id}`)
-            .then(response => {
-                //this is where the youtube key is located
-                console.log(response.data.videos)
-                setVideo(response.data.videos.results)
-            })
-            .catch(console.warn)
-    }
+        try{
+        const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/movies/${movieDetails.id}/video`)
+        //this is where the youtube key is located
+
+        setVideo(response.data.videos.results)
+        } catch(err){
+            console.warn(err)
+        }
+      }
     useEffect(() => {
         getFilmsTMDB()
     }, [])
@@ -41,32 +46,42 @@ function MovieDetails({
     })
 
     const handleManyVideos = (trailersURL, num) => {
-        console.log("array of trailers", trailersURL)
-        let newArray = trailersURL.filter( trailer => {
+        let newArray = trailersURL.filter(trailer => {
             return trailer != null
         })
         return newArray[num]
     }
-    
 
-
+    const handleSmallVideos = (trailersURL, num) => {
+    }
     return (
         <>
-            
             <h1>MovieDetails</h1>
-            {newVideoPlay ? 
+
+            {/* are there many trailer? */}
+            {trailersURL.length > 1 ?
+            <div>
+                <Card style={{ color: "slategrey", maxHeight: "350px" }} className="m-3">
+                    {/* One Big trailer */}
+                    {handleManyVideos(trailersURL, 0)}
+                    <Card.Body>
+                        <Card.Title>{movieDetails.movieTitle}</Card.Title>
+                    </Card.Body>
+                </Card>
+                {/* Rest are small videos */}
+                {handleSmallVideos(trailersURL, trailersURL.length)}
+            </div>
+            :
+
             <Card style={{ color: "slategrey", maxHeight: "350px" }} className="m-3">
-                {trailersURL.length > 1 ? handleManyVideos(trailersURL, 0) :
-                trailersURL}
+                {handleManyVideos(trailersURL, 0)}
                 <Card.Body>
                     <Card.Title>{movieDetails.movieTitle}</Card.Title>
                 </Card.Body>
             </Card>
-            {trailersURL.length > 1 ? handleSmallVideos(trailersURL) :
-                null}
-            :
-                null
             }
+            <button type="submit" onClick={() => handleAddToCart(movieDetails, 2000)}> Add to cart</button>
+            <PayButton cartProducts={cartProducts} currentUser={currentUser}/>
             <AddReview
                 currentUser={currentUser}
                 postReviews={postReviews}
@@ -74,13 +89,13 @@ function MovieDetails({
                 userReview={userReview}
                 movieDetails={movieDetails}
             />
-            {/* <GetReview 
+            <GetReview 
                 movieDetails={movieDetails}
                 reviews={reviews}
                 getReviews={getReviews}
-            /> */}
+            />
         </>
     );
 }
 
-export default MovieDetails;
+export default TMDBMovieDetails;

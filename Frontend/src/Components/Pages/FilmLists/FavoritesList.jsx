@@ -17,7 +17,7 @@ function FavoritesList({ favoritesArray, handleFavorite, handleDeleteFavorite, h
         } else {
             alreadyFav = false
         }
-        console.log("film.movieTitle", film.movieTitle)
+
         return (
             <Card key={idx} style={{ maxWidth: "350px", color: "slategrey", maxHeight: "350px", overflow: "scroll" }} className="m-3 hover:opacity-3">
                 <Card.Img variant="top" src={`https://image.tmdb.org/t/p/w1280/${film.moviePoster}`} alt={`Screenshot from the film ${film.movieTitle}`} className='pop-film-img' />

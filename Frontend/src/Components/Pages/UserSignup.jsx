@@ -4,7 +4,6 @@ import jwt_decode from 'jwt-decode'
 import { Form, Col, Row, Container } from 'react-bootstrap';
 
 
-
 export default function Register({ currentUser, setCurrentUser }) {
     const [fname, setFName] = useState('')
     const [lname, setLName] = useState('')

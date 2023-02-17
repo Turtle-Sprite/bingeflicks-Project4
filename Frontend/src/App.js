@@ -1,7 +1,7 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route, redirect, Navigate, useNavigate } from 'react-router-dom'
+import { useState, useEffect} from 'react'
 import jwt_decode from 'jwt-decode'
-import MovieDetails from './Components/Pages/MovieDetails'
+import TMDBMovieDetails from './Components/Pages/TMDBMovieDetails'
 import Homepage from './Components/Pages/Homepage'
 import UserLogin from './Components/Pages/UserLogin'
 import UserSignup from './Components/Pages/UserSignup'
@@ -14,16 +14,14 @@ import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-
-
 function App() {
+  let navigate = Navigate
   const [currentUser, setCurrentUser] = useState(null)
-  const [cart, setCart] = useState([])
   //TMDB films
   const [films, setFilm] = useState([])
   //get info from db and search fav array for conditional rendering
-  const [favoritesArray, setFavoritesArray] = useState([]) 
-   let [signInError, setSignInError] = useState('')
+  const [favoritesArray, setFavoritesArray] = useState([])
+  let [signInError, setSignInError] = useState('')
   const [errorMsg, setErrorMsg] = useState(false)
   //sets moviedetails based on the film which rendered the "See Film Details" button
   let [movieDetails, setMovieDetails] = useState({})
@@ -40,28 +38,49 @@ function App() {
 
   const [cartProducts, setCartProducts] = useState([
     {
-      movieTitle: "",
-      moviePrice: "",
-      movieGenre: "",
+      movieTitle: null,
+      moviePrice: null,
+      movieDescription: null
     }
   ])
 
   //Cart movieTitle, moviePrice, movieGenre
-  function handleAddToCart(item) {
-    setCartProducts([
-      ...cartProducts,
-      {
-        movieTitle: item.movieTitle,
-        moviePrice: item.moviePrice,
-        movieGenre: item.movieGenre,
+  function handleAddToCart(item, price) {
+    console.log(item, " ",price, "add to cart")
+    cartProducts.map(cartItem => {
+      
+      console.log(cartItem.movieTitle, " cart",price, "add to cart", item.title)
+      if(cartItem.movieTitle == null) {
+        setCartProducts([
+          {
+            movieTitle: item.title,
+            moviePrice: price,
+            movieDescription: item.overview
+          }
+        ])
+
+      } else if (cartItem.movieTitle != item.title) {
+        console.log("Setting the else if")
+           setCartProducts([
+          ...cartProducts,
+          {
+            movieTitle: item.title,
+            moviePrice: item.price,
+            movieDescription: item.overview
+          }
+        ])
+
+      } else {
+
       }
-    ])
+    })
   }
 
   function handleDeleteFromCart(item) {
     const newProducts = cartProducts?.filter(cartItem => {
       return cartItem.movieTitle !== item.movieTitle
     })
+    console.log(newProducts, "new Products")
     setCartProducts(newProducts)
   }
 
@@ -73,6 +92,7 @@ function App() {
     return totalCost
   }
 
+  //Checks for user login
   useEffect(() => {
     // check to see if token is in storage
     const token = localStorage.getItem('jwt')
@@ -85,25 +105,25 @@ function App() {
     }
   }, []) // happen only once
 
-    // event handler to log the user out when needed
+  // event handler to log the user out 
   const handleLogout = () => {
-      // check to see if a token exists in local storage
-      if (localStorage.getItem('jwt')) {
-        // if so, delete it
-        localStorage.removeItem('jwt')
-        // set the user in the App state to be null
-        setCurrentUser(null)
-      }
+    // check to see if a token exists in local storage
+    if (localStorage.getItem('jwt')) {
+      // if so, delete it
+      localStorage.removeItem('jwt')
+      // set the user in the App state to be null
+      setCurrentUser(null)
+    }
   }
 
   //call TMDB API for current films
   const getFilmsTMDB = async () => {
-    await axios.get(`${process.env.REACT_APP_SERVER_URL}/movies`)
-      .then(response => {
-        // console.log(response.data)
-        setFilm(response.data.results)
-      })
-      .catch(console.warn)
+    try{
+      const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/movies`)
+      setFilm(response.data.results)
+    } catch (err) {
+      console.warn('err in getFilmsTMDB', err)
+    }
   }
   ////GET LIST OF FAVORITES
   const getFavorites = async () => {
@@ -116,8 +136,8 @@ function App() {
         }
       }
       const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/movies/favorites`, options)
-      
-      setFavoritesArray(...favoritesArray, response.data)
+
+      setFavoritesArray(response.data)
     } catch (err) {
       console.log("Get favorites error", err)
     }
@@ -135,12 +155,8 @@ function App() {
         }
       }
       //POST the movie to the user's favorites array
-      await axios.post(`${process.env.REACT_APP_SERVER_URL}/movies/${filmDetails.title}`, filmDetails, options)
-        .then(response => {
-          // console.log("data from favorite's POST",response)
-        })
-        .catch(console.warn)
-
+      const respone = await axios.post(`${process.env.REACT_APP_SERVER_URL}/movies/${filmDetails.title}`, filmDetails, options)
+      getFavorites()
     } catch (err) {
       console.log(err)
     }
@@ -148,8 +164,7 @@ function App() {
   /////DELETE FAVORITES
   async function handleDeleteFavorite(filmDetails) {
     try {
-      // console.log("Delete", filmDetails)
-      // console.log("user", currentUser)
+
       const token = localStorage.getItem('jwt')
       // make the auth headers
       const options = {
@@ -158,31 +173,13 @@ function App() {
         }
       }
       //DELETE the movie from the user's favorites array
-      await axios.delete(`${process.env.REACT_APP_SERVER_URL}/movies/${filmDetails.title}`, options)
-        .then(response => {
-          console.log("data from favorite's DELETE", response)
-          // navigate(`/movies/${response.data._id}/confirmed`)
-        })
-        .catch(console.warn)
-
+      const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/movies/${filmDetails.title}`, options)
+      getFavorites()
     } catch (err) {
       console.log(err.response.data)
     }
   }
 
-  /////Toggle Favorites 
-  function handleToggleFavorites(filmTitle, boolean) {
-
-    let newArray = [...favoritesArray]
-    let filmIndex = newArray.indexOf(filmTitle)
-
-    if (filmIndex < 0) {
-      setFavoritesArray([...newArray, filmTitle])
-    } else {
-      newArray.splice(filmIndex, 1)
-      setFavoritesArray(newArray)
-    }
-  }
 
   ////GET Movie Reviews based on movie Title
   const getReviews = async (movieTitle) => {
@@ -195,12 +192,11 @@ function App() {
         }
       }
 
-      await axios.get(`${process.env.REACT_APP_SERVER_URL}/reviews/${movieTitle}`, options)
-        .then(response => {
-          console.log("review of movie", response.data)
-          setReviews(response.data)
-        })
-        .catch(console.warn)
+      const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/reviews/${movieTitle}`, options)
+      console.log("review of movie", response.data)
+
+      setReviews(response.data)
+
     } catch (err) {
       console.log("Get reviews error", err)
     }
@@ -219,14 +215,11 @@ function App() {
         }
       }
 
-      await axios.post(`${process.env.REACT_APP_SERVER_URL}/reviews/${userReview.movieTitle}`, userReview, options)
-        .then(response => {
-          console.log("Posted Review", response)
-        })
-        .catch(console.warn)
+      const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/reviews/${userReview.movieTitle}`, userReview, options)
+      navigate(`/movies/${movieDetails.title}`)
 
     } catch (err) {
-      console.log("Get reviews error", err)
+      console.log("POST reviews error", err)
     }
   }
 
@@ -241,14 +234,10 @@ function App() {
         }
       }
 
-      await axios.delete(`${process.env.REACT_APP_SERVER_URL}/reviews/${reviewId}`, options)
-        .then(response => {
-          console.log("Posted Review", response)
-        })
-        .catch(console.warn)
+      const respone = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/reviews/${reviewId}`, options)
 
     } catch (err) {
-      console.log("Get reviews error", err)
+      console.log("DELETE reviews error", err)
     }
   }
 
@@ -258,7 +247,7 @@ function App() {
       <div className="page-container">
         <div className="main">
           <Router>
-            <Navbar currentUser={currentUser} handleLogout={handleLogout}/>
+            <Navbar currentUser={currentUser} handleLogout={handleLogout} />
             <Routes>
               <Route path="/" element={<Homepage
                 currentUser={currentUser}
@@ -273,17 +262,17 @@ function App() {
                 handleFavorite={handleFavorite}
                 handleDeleteFavorite={handleDeleteFavorite}
                 favoritesArray={favoritesArray}
-                handleToggleFavorites={handleToggleFavorites}
                 signInError={signInError}
                 setSignInError={setSignInError}
                 setMovieDetails={setMovieDetails}
                 getFilmsTMDB={getFilmsTMDB}
                 getFavorites={getFavorites} />}
                 handleAddToCart={handleAddToCart}
-                cart={cartProducts}
+                handleDeleteFromCart={handleDeleteFromCart}
+                cartProducts={cartProducts}
               />
 
-              <Route path="/movies/:id" element={<MovieDetails
+              <Route path="/movies/:id" element={<TMDBMovieDetails
                 currentUser={currentUser}
                 postReviews={postReviews}
                 setUserReview={setUserReview}
@@ -292,9 +281,12 @@ function App() {
                 getReviews={getReviews}
                 deleteReviews={deleteReviews}
                 reviews={reviews}
+                handleAddToCart={handleAddToCart}
+                handleDeleteFromCart={handleDeleteFromCart}
+                cartProducts={cartProducts}
               />} />
-              
-              <Route path="/cart" element={<Cart currentUser={currentUser} cart={cart} setCart={setCart} handleAddToCart={handleAddToCart} />} />
+
+              <Route path="/cart" element={<Cart currentUser={currentUser} cartProducts={cartProducts} handleAddToCart={handleAddToCart} handleDeleteFromCart={handleDeleteFromCart}/>} />
               <Route path="/checkout-success" element={<CheckoutSuccess currentUser={currentUser} />} />
               <Route path="/login" element={<UserLogin currentUser={currentUser} setCurrentUser={setCurrentUser} />} />
               <Route path="/signup" element={<UserSignup currentUser={currentUser} setCurrentUser={setCurrentUser} />} />
@@ -302,7 +294,7 @@ function App() {
             </Routes>
           </Router>
         </div>
-    </div>
+      </div>
       <Footer />
     </div>
   );

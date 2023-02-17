@@ -28,6 +28,9 @@ const MoviesSchema = new mongoose.Schema({
     moviePrice: {
         type: Number
     },
+    movieFavorite: {
+        type: Boolean
+    },
 
     userId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     reviewId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }]

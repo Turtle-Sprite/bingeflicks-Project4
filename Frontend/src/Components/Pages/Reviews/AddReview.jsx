@@ -1,23 +1,28 @@
+import { Form, Col, Row, Container } from 'react-bootstrap';
 
 function AddReview({ currentUser, postReviews, setUserReview, userReview, movieDetails }) {
     return (
         <>
-            <form onSubmit={e => {postReviews(e)}}>
-                <input type='text' value={userReview.title} 
+        <Container>
+        <Col sm={12} md={6} lg={5}>
+            <Form onSubmit={e => {postReviews(e)}}>
+            <Form.Label>Review Title: </Form.Label>
+                <Form.Control type='text' value={userReview.title} 
                 onChange={e => setUserReview({
                     title: e.target.value, 
                     content: userReview.content, 
                     rating: userReview.rating, 
                     movieTitle: movieDetails.title})}/>
-
-                <input type='text' value={userReview.content} 
+                <Form.Label>Review Content</Form.Label>
+                <Form.Control type='text' value={userReview.content} 
                 onChange={e => setUserReview({
                     title: userReview.title,
                     content: e.target.value,
                     rating: userReview.rating, 
                     movieTitle: movieDetails.title})}/>
 
-                <input type='text' value={userReview.rating} 
+                <Form.Label>Movie Rating (1-5)</Form.Label>
+                <Form.Control type='text' value={userReview.rating} 
                 onChange={e => setUserReview({
                     title: userReview.title,
                     content: userReview.content,
@@ -25,7 +30,9 @@ function AddReview({ currentUser, postReviews, setUserReview, userReview, movieD
                     movieTitle: movieDetails.title})}/>
 
                 <button type='submit'>Add Review</button>
-            </form>
+            </Form>
+            </Col>
+            </Container>
         </>
     );
 }

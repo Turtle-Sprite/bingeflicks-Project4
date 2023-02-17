@@ -9,7 +9,6 @@ router.get('/', async(req, res) => {
   const findUser = await db.User.findOne({
     email: res.locals.user
   })
-  console.log(findUser, "GET TEST")
   res.json(findUser)
 })
 
@@ -38,7 +37,7 @@ router.post('/register', async (req, res) => {
       lname: req.body.lname,
       password: hashedPassword,
       })
-    console.log(newUser)
+
 
     await newUser.save()
 
@@ -103,7 +102,7 @@ router.post('/login', async (req, res) => {
 // GET /auth-locked - will redirect if bad jwt token is found
 router.get('/auth-locked', authLockedRoute, (req, res) => {
   // we know that if we made it here, the res.locals contains an authorized user
-  console.log('this user has been authorized:', res.locals.user)
+
   res.json({ msg: 'welcome to the private route!' })
 })
 

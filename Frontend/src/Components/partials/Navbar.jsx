@@ -18,9 +18,9 @@ function NavbarNav({currentUser, handleLogout}) {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
-                    <Nav.Link href="/">
+                    <NavLink to="/">
                         <p className="text-gray-800 hover:text-gray-400 duration-500 link text-xl">Rent Movies</p>
-                    </Nav.Link>
+                    </NavLink>
 
                     {currentUser ?
                     <div className='col-ends'>
