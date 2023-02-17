@@ -15,7 +15,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function App() {
-  let navigate = Navigate
+  // let navigate = Navigate
   const [currentUser, setCurrentUser] = useState(null)
   //TMDB films
   const [films, setFilm] = useState([])
@@ -33,54 +33,72 @@ function App() {
     title: '',
     content: '',
     rating: '',
-    movieTitle: ''
+    movieTitle: '',
   })
 
   const [cartProducts, setCartProducts] = useState([
     {
       movieTitle: null,
       moviePrice: null,
-      movieDescription: null
+      movieDescription: null,
+      TMDBid: null,
     }
   ])
 
   //Cart movieTitle, moviePrice, movieGenre
-  function handleAddToCart(item, price) {
-    console.log(item, " ",price, "add to cart")
-    cartProducts.map(cartItem => {
+  async function handleAddToCart(item, price) {
+    // console.log(item, " ",price, "add to cart")
+
+    cartProducts.forEach(cartItem => {
       
-      console.log(cartItem.movieTitle, " cart",price, "add to cart", item.title)
+      // console.log(cartItem.movieTitle, " cart",price, "add to cart", item.title)
       if(cartItem.movieTitle == null) {
         setCartProducts([
           {
             movieTitle: item.title,
             moviePrice: price,
-            movieDescription: item.overview
+            movieDescription: item.overview,
+            TMDBid:item.id
           }
         ])
 
       } else if (cartItem.movieTitle != item.title) {
-        console.log("Setting the else if")
+
            setCartProducts([
           ...cartProducts,
           {
             movieTitle: item.title,
-            moviePrice: item.price,
-            movieDescription: item.overview
-          }
+            moviePrice: price,
+            movieDescription: item.overview,
+            TMDBid:item.id
+         }
         ])
-
-      } else {
-
-      }
+      } 
     })
+    try {
+      const token = localStorage.getItem('jwt')
+      // make the auth headers
+      const options = {
+        headers: {
+          'Authorization': token
+        }
+      }
+      console.log(cartProducts)
+      const postResponse = await axios.post(`${process.env.REACT_APP_SERVER_URL}/orders`, cartProducts, options)
+      console.log("post reponse", postResponse)
+      // const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/orders`, options)
+      
+      // setCartProducts(response.data)
+    } catch (err) {
+      console.log("POST error", err)
+    }
   }
 
   function handleDeleteFromCart(item) {
     const newProducts = cartProducts?.filter(cartItem => {
       return cartItem.movieTitle !== item.movieTitle
     })
-    console.log(newProducts, "new Products")
+
     setCartProducts(newProducts)
   }
 
@@ -216,7 +234,7 @@ function App() {
       }
 
       const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/reviews/${userReview.movieTitle}`, userReview, options)
-      navigate(`/movies/${movieDetails.title}`)
+      // navigate(`/movies/${movieDetails.title}`)
 
     } catch (err) {
       console.log("POST reviews error", err)

@@ -20,6 +20,5 @@ db.on('error', err => console.log(` the data center has burned to the ground:`, 
 module.exports = {
     User: require('./User'),
     Movies: require('./Movies'),
-    Review: require('./Review'),
-    Order: require('./Order')
+    Review: require('./Review')
 }

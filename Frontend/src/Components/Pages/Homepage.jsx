@@ -38,8 +38,8 @@ function Homepage({ currentUser,
                     setMovieDetails={setMovieDetails}
                 />
             </div>
-
-            <div className="flexContainer">
+            <h2>Browse the latest movies!</h2>
+            <div className="scrolling-container">
                 <PopularFilmList
                     currentUser={currentUser}
                     films={films}
@@ -60,7 +60,8 @@ function Homepage({ currentUser,
             </div>
             {currentUser ?
             <>
-                <h2>Watch your favorites again!</h2>
+            <h2>Watch your favorites again!</h2>
+            <div className="scrolling-container">
                 <FavoritesList
                     favoritesArray={favoritesArray}
                     handleFavorite={handleFavorite}
@@ -69,6 +70,7 @@ function Homepage({ currentUser,
                     setMovieDetails={setMovieDetails}
                     
                 />
+            </div>
             </>
                 : null
             }

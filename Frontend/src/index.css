@@ -33,6 +33,32 @@ button[type=submit] {
   @apply flex justify-between items-center px-4 py-2 rounded hover:bg-teal-700 bg-teal-800 hover:text-gray-400 mt-2
 }
 
+/* .scrolling-container {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+
+  
+} */
+.scrolling-container {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+}
+.cardScroll {
+  /* display: inline-block; */
+  flex: 0 0 auto;
+}
+
+.descrShorten {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+            line-clamp: 2; 
+    -webkit-box-orient: vertical;
+}
+
 .main {
   margin: 0 auto;
   overflow: auto;
@@ -67,7 +93,3 @@ button[type=submit] {
   justify-content: flex-end;
 }
 
-.pop-film-img {
-  width: 200px;
-  height: auto;
-}

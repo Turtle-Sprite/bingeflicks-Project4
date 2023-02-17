@@ -1,5 +1,23 @@
 const mongoose = require('mongoose')
 
+const OrderSchema = new mongoose.Schema({
+  movieTitle: {
+      type: String 
+  },
+  moviePrice: {
+      type: Number 
+  },
+  movieGenre: {
+      type: String 
+  },
+  TMDBId: {
+      type: String 
+  },
+  moviesId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+}, {
+  timestamps: true 
+})
+
 const UserSchema = new mongoose.Schema({
     fname: {
         type: String 
@@ -27,9 +45,9 @@ const UserSchema = new mongoose.Schema({
           type: Number
         },
     },
+    order: [OrderSchema],
     reviewId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
     moviesFavId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movies' }],
-    orderId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Order' }],
 }, {
     timestamps: true 
 })

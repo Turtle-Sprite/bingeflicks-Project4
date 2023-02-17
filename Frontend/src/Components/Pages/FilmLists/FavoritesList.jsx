@@ -19,7 +19,7 @@ function FavoritesList({ favoritesArray, handleFavorite, handleDeleteFavorite, h
         }
 
         return (
-            <Card key={idx} style={{ maxWidth: "350px", color: "slategrey", maxHeight: "350px", overflow: "scroll" }} className="m-3 hover:opacity-3">
+            <Card key={idx} style={{ maxWidth: "350px", color: "slategrey", maxHeight: "350px", overflow: "scroll" }} className="m-3 hover:opacity-3 card-Scroll">
                 <Card.Img variant="top" src={`https://image.tmdb.org/t/p/w1280/${film.moviePoster}`} alt={`Screenshot from the film ${film.movieTitle}`} className='pop-film-img' />
                 <Card.Body>
                     <div>
@@ -35,7 +35,7 @@ function FavoritesList({ favoritesArray, handleFavorite, handleDeleteFavorite, h
                             }} />}
                     </div>
                     <Card.Title style={{ color: "black" }} >{film.movieTitle}</Card.Title>
-                    <Card.Text>
+                    <Card.Text className="descrShorten">
                        {film.movieDescription}
                     </Card.Text>
                     <Card.Text style={{ color: "black" }}>Price: $ {moviePrice}</Card.Text>
