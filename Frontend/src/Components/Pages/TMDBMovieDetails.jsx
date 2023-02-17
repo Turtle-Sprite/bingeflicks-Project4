@@ -62,10 +62,6 @@ function TMDBMovieDetails({
     return (
         <>
             <Container>
-                <div className="homepage-title mt-3 ">
-                    <h1>{movieDetails.title}</h1>
-                </div>
-
                 <div className="flexContainer items-center">
                     {/* are there many trailer? */}
                     {trailersURL.length > 1 ?
@@ -75,15 +71,16 @@ function TMDBMovieDetails({
                                 {handleManyVideos(trailersURL, 0)}
                                 <Card.Body>
                                     <Card.Title style={{ color: "slategrey" }}>{movieDetails.title}</Card.Title>
-                                    
+
                                     <Card.Text className="descrShorten">
                                         {movieDetails.overview}
                                     </Card.Text>
                                     <Card.Text style={{ color: "black" }}>Price: $ {moviePrice}</Card.Text>
                                     <div className="flexContainer items-center ">
                                         <button className="mx-4" type="submit" onClick={() => {
-                                            notify(movieDetails.title) 
-                                            handleAddToCart(movieDetails, 500)}}> Add to cart</button>
+                                            notify(movieDetails.title)
+                                            handleAddToCart(movieDetails, 500)
+                                        }}> Add to cart</button>
                                         <PayButton className="mx-4" cartProducts={cartProducts} currentUser={currentUser} />
                                     </div>
                                 </Card.Body>
@@ -96,26 +93,32 @@ function TMDBMovieDetails({
                         <Card style={{ color: "slategrey", maxHeight: "350px" }} className="m-3">
                             {handleManyVideos(trailersURL, 0)}
                             <Card.Body>
-                                <Card.Title>{movieDetails.movieTitle}</Card.Title>
+                                <Card.Title>{movieDetails.title}</Card.Title>
                             </Card.Body>
                         </Card>
                     }
                 </div>
-
-                <div className="items-center m-3">
-                    <AddReview
-                        currentUser={currentUser}
-                        postReviews={postReviews}
-                        setUserReview={setUserReview}
-                        userReview={userReview}
-                        movieDetails={movieDetails}
-                    />
-                    <GetReview
-                        movieDetails={movieDetails}
-                        reviews={reviews}
-                        getReviews={getReviews}
-                    />
-                </div>
+                <Container>
+                    <Card style={{ color: "slategrey" }}>
+                        <div className="items-center m-3">
+                            <div className="">
+                                <h2>Share your thoughts on {movieDetails.title}</h2>
+                            </div>
+                            <AddReview
+                                currentUser={currentUser}
+                                postReviews={postReviews}
+                                setUserReview={setUserReview}
+                                userReview={userReview}
+                                movieDetails={movieDetails}
+                            />
+                            <GetReview
+                                movieDetails={movieDetails}
+                                reviews={reviews}
+                                getReviews={getReviews}
+                            />
+                        </div>
+                    </Card>
+                </Container>
             </Container>
         </>
     );

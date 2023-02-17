@@ -60,6 +60,12 @@ button[type=submit] {
   @apply flex justify-between items-center px-4 py-2 rounded hover:bg-teal-700 bg-teal-800 hover:text-gray-400 mt-2
 }
 
+.auto {
+  margin: 0 auto;
+}
+.error {
+  color: red;
+}
 .homepage-title {
   width: 500px;
   height: 6rem;

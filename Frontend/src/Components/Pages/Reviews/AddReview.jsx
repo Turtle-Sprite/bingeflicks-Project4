@@ -3,8 +3,7 @@ import { Form, Col, Row, Container } from 'react-bootstrap';
 function AddReview({ currentUser, postReviews, setUserReview, userReview, movieDetails }) {
     return (
         <>
-        <Container className='m-4'>
-        <Col sm={12} md={6} lg={5}>
+        <Container className='mx-6 my-5'>
             <Form onSubmit={e => {postReviews(e)}}>
             <Form.Label>Review Title: </Form.Label>
                 <Form.Control type='text'  placeholder='My favorite!' value={userReview.title} 
@@ -31,7 +30,6 @@ function AddReview({ currentUser, postReviews, setUserReview, userReview, movieD
 
                 <button type='submit'>Add Review</button>
             </Form>
-            </Col>
             </Container>
         </>
     );

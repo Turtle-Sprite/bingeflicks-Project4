@@ -42,8 +42,7 @@ export default function Login({ currentUser, setCurrentUser }) {
 		return <Navigate to="/" />
 	}
     return (
-        <Container>
-            <Col sm={12} md={6} lg={5}>
+        <Container className='auto mt-5'>
             <Form onSubmit={handleSubmit}>
                 <Form.Label>Email</Form.Label>
                 <Form.Control
@@ -57,7 +56,6 @@ export default function Login({ currentUser, setCurrentUser }) {
                     value={password} />
                 <button type="submit"> Login </button>
             </Form>
-                </Col>
         </Container>
     )
 }

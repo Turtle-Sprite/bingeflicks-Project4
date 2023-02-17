@@ -45,8 +45,7 @@ export default function Register({ currentUser, setCurrentUser }) {
     return (
         <>
             <div className='mx-auto'>
-                <Container>
-                    <Col sm={12} md={6} lg={5}>
+                <Container className='auto mt-5'>
                         <Form onSubmit={handleSubmit}>
                             <Row>
                                 <Col>
@@ -76,7 +75,6 @@ export default function Register({ currentUser, setCurrentUser }) {
                                 value={password} />
                             <button className="mt-3" type="submit"> Sign Up </button>
                         </Form>
-                    </Col>
                 </Container>
             </div>
         </>

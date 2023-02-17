@@ -23,7 +23,7 @@ function PopularFilmList({ films, handleFavorite, handleDeleteFavorite, currentU
         }
 
         return (
-            <Card key={idx} style={{ maxWidth: "350px", color: "slategrey", maxHeight: "450px"}} className="m-3 hover:opacity-3 cardScroll">
+            <Card key={idx} style={{ maxWidth: "350px", color: "slategrey", maxHeight: "500px" }} className="m-3 mt-2 hover:opacity-3 cardScroll">
                 <Card.Img variant="top" src={`https://image.tmdb.org/t/p/w1280/${film.backdrop_path}`} alt={`Screenshot from the film ${film.title}`} className='pop-film-img' />
                 <Card.Body>
                     <div className="flexContainer">
@@ -32,38 +32,43 @@ function PopularFilmList({ films, handleFavorite, handleDeleteFavorite, currentU
                             <button className="mr-9 my-2 self-start" type="submit" onClick={() => { setMovieDetails(film) }}>See Movie Details</button>
                         </Link>
 
-                        
+
                         {currentUser ?
                             (
                                 <div>
                                     {alreadyFav ?
-                                    <div>
-                                        <AiFillHeart className="ml-3 w-10 h-10 fill-red-500" type="submit" onClick={() => {
-                                            handleDeleteFavorite(film)
-                                        }} /> 
-                                        <div className="flexContainer items-baseline">
-                                        <AiFillPlusCircle className=" w-8 h-8" onClick={() => { 
-                                            notify(film.title) 
-                                            handleAddToCart(film, 500) }} /> Cart
-                                        <ToastContainer />
-                                    </div>
-                                    </div>
+                                        <div>
+                                            <AiFillHeart className="ml-3 w-10 h-10 fill-red-500" type="submit" onClick={() => {
+                                                handleDeleteFavorite(film)
+                                            }} />
+                                            <div className="flexContainer items-baseline">
+                                                <AiFillPlusCircle className=" w-8 h-8" onClick={() => {
+                                                    notify(film.title)
+                                                    handleAddToCart(film, 500)
+                                                }} /> Cart
+                                                <ToastContainer />
+                                            </div>
+                                        </div>
                                         :
                                         <div>
-                                        <AiOutlineHeart className="ml-3 w-10 h-10 stroke-red-500 stroke-2" type="submit" onClick={() => {
-                                            handleFavorite(film)
-                                        }} />
-                                        <div className="flexContainer items-baseline">
-                                        <AiFillPlusCircle className="w-8 h-8"  onClick={() => { notify(film.title) 
-                                        handleAddToCart(film, 500) }} /> Cart
-                                        <ToastContainer />
-                                        </div>
+                                            <AiOutlineHeart className="ml-3 w-10 h-10 stroke-red-500 stroke-2" type="submit" onClick={() => {
+                                                handleFavorite(film)
+                                            }} />
+                                            <div className="flexContainer items-baseline">
+                                                <AiFillPlusCircle className="w-8 h-8" onClick={() => {
+                                                    notify(film.title)
+                                                    handleAddToCart(film, 500)
+                                                }} /> Cart
+                                                <ToastContainer />
+                                            </div>
                                         </div>}
                                 </div>
                             )
                             :
                             <div>
-                                <AiOutlineHeart onClick={() => setSignInError('Please sign in to favorite movies.')} />
+                                <div>
+                                    <AiOutlineHeart className=" w-8 h-8" onClick={() => setSignInError('Please sign in to favorite movies.')} />
+                                </div>
                                 <p className='error'>{signInError}</p>
                             </div>
                         }
@@ -79,7 +84,6 @@ function PopularFilmList({ films, handleFavorite, handleDeleteFavorite, currentU
 
     return (
         <>
-            <p>{signInError}</p>
             {popfilms}
         </>
     );
