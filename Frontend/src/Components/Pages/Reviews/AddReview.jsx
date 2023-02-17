@@ -3,7 +3,7 @@ import { Form, Col, Row, Container } from 'react-bootstrap';
 function AddReview({ currentUser, postReviews, setUserReview, userReview, movieDetails }) {
     return (
         <>
-        <Container>
+        <Container className='m-4'>
         <Col sm={12} md={6} lg={5}>
             <Form onSubmit={e => {postReviews(e)}}>
             <Form.Label>Review Title: </Form.Label>

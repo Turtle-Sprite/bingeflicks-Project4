@@ -20,9 +20,10 @@ function Homepage({ currentUser,
     setSignInError,
     setMovieDetails,
     getFilmsTMDB,
-    getFavorites
+    getFavorites,
+    moviePrice
 }) {
-
+    
 
     useEffect(() => {
         getFilmsTMDB()
@@ -56,6 +57,7 @@ function Homepage({ currentUser,
                     signInError={signInError}
                     setSignInError={setSignInError}
                     setMovieDetails={setMovieDetails}
+                    moviePrice={moviePrice}
                 />
             </div>
             {currentUser ?

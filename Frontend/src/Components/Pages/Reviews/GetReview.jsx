@@ -9,9 +9,9 @@ function GetReview({ movieDetails, reviews, getReviews}) {
     },[])
 
     if(reviews.length > 0) {
-        allreviews = reviews.map((review) =>{
+        allreviews = reviews.map((review, idx) =>{
             return (
-                <Card className="mx-5" style={{ maxWidth: "350px", color: "slategrey", maxHeight: "350px", overflow: "scroll" }}>
+                <Card key={idx} className="mx-5" style={{ maxWidth: "350px", color: "slategrey", maxHeight: "350px", overflow: "scroll", textAlign: "center" }}>
                 <div>
                     <h4>{review.title}</h4>
                     <h6>{review.content}</h6>

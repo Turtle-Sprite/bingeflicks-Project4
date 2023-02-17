@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom"
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { Card, Button } from "react-bootstrap";
+import { useState } from "react";
 
-function PopularFilmList({ films, handleFavorite, handleDeleteFavorite, currentUser, favoritesArray, handleToggleFavorites, reviews, signInError, setSignInError, setRenderMovieDetails, setMovieDetails, handleAddToCart, cart, handleDeleteFromCart }) {
-    let moviePrice = 9.99
+function PopularFilmList({ films, handleFavorite, handleDeleteFavorite, currentUser, favoritesArray, handleToggleFavorites, reviews, signInError, setSignInError, setRenderMovieDetails, setMovieDetails, handleAddToCart, cart, handleDeleteFromCart, moviePrice }) {
+
     // let inCart = false
 
     //map through all films and make aray of titles
@@ -19,47 +20,36 @@ function PopularFilmList({ films, handleFavorite, handleDeleteFavorite, currentU
         } else {
             alreadyFav = false
         }
-        //create array of titles in cart
-        // const cartTitles = cart?.map(item => {
-        //     return item.movieTitle
-        // })
 
-        //if the current film is in cart, conditionally render delete button
-        // if(cartTitles.includes(film.title)) {
-        //     inCart = true
-        // } else {
-        //     inCart = false
-        // }
-        // console.log(`https://image.tmdb.org/t/p/w1280/${film.backdrop_path}`)
         return (
             <Card key={idx} style={{ maxWidth: "350px", color: "slategrey", maxHeight: "400px", overflow: "scroll" }} className="m-3 hover:opacity-3 cardScroll">
                 <Card.Img variant="top" src={`https://image.tmdb.org/t/p/w1280/${film.backdrop_path}`} alt={`Screenshot from the film ${film.title}`} className='pop-film-img' />
                 <Card.Body>
                     <div className="flexContainer">
-                    <Link to={`/movies/${film.title}`}>
+                        <Link to={`/movies/${film.title}`}>
 
-                        <button className="mr-5 my-2 self-start" type="submit" onClick={() => { setMovieDetails(film) }}>See Movie Details</button>
-                    </Link>
-                    {currentUser ?
-                        (
+                            <button className="mr-5 my-2 self-start" type="submit" onClick={() => { setMovieDetails(film) }}>See Movie Details</button>
+                        </Link>
+                        {currentUser ?
+                            (
+                                <div>
+                                    {alreadyFav ?
+                                        <AiFillHeart className="ml-3 w-8 h-8 fill-red-500" type="submit" onClick={() => {
+
+                                            handleDeleteFavorite(film)
+                                        }} /> :
+
+                                        <AiOutlineHeart className="ml-3 w-8 h-8 stroke-red-500 stroke-2" type="submit" onClick={() => {
+                                            handleFavorite(film)
+                                        }} />}
+                                </div>
+                            )
+                            :
                             <div>
-                                {alreadyFav ?
-                                    <AiFillHeart className="ml-3 w-8 h-8 fill-red-500" type="submit" onClick={() => {
-
-                                        handleDeleteFavorite(film)
-                                    }} /> :
-
-                                    <AiOutlineHeart className="ml-3 w-8 h-8 stroke-red-500 stroke-2" type="submit" onClick={() => {
-                                        handleFavorite(film)
-                                    }} />}
+                                <AiOutlineHeart onClick={() => setSignInError('Please sign in to favorite movies.')} />
+                                <p className='error'>{signInError}</p>
                             </div>
-                        )
-                        :
-                        <div>
-                            <AiOutlineHeart onClick={() => setSignInError('Please sign in to favorite movies.')} />
-                            <p className='error'>{signInError}</p>
-                        </div>
-                    }
+                        }
                     </div>
                     <Card.Title style={{ color: "black" }} >{film.title}</Card.Title>
                     <Card.Text className="descrShorten">

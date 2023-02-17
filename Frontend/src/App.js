@@ -25,7 +25,7 @@ function App() {
   const [errorMsg, setErrorMsg] = useState(false)
   //sets moviedetails based on the film which rendered the "See Film Details" button
   let [movieDetails, setMovieDetails] = useState({})
-
+  const [moviePrice, setMoviePrice] = useState(999)
   //reviews from db
   const [reviews, setReviews] = useState([])
   //Info for posting reviews
@@ -211,7 +211,6 @@ function App() {
       }
 
       const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/reviews/${movieTitle}`, options)
-      console.log("review of movie", response.data)
 
       setReviews(response.data)
 
@@ -288,6 +287,7 @@ function App() {
                 handleAddToCart={handleAddToCart}
                 handleDeleteFromCart={handleDeleteFromCart}
                 cartProducts={cartProducts}
+                moviePrice={moviePrice}
               />
 
               <Route path="/movies/:id" element={<TMDBMovieDetails
@@ -302,9 +302,15 @@ function App() {
                 handleAddToCart={handleAddToCart}
                 handleDeleteFromCart={handleDeleteFromCart}
                 cartProducts={cartProducts}
+                moviePrice={moviePrice}
               />} />
 
-              <Route path="/cart" element={<Cart currentUser={currentUser} cartProducts={cartProducts} handleAddToCart={handleAddToCart} handleDeleteFromCart={handleDeleteFromCart}/>} />
+              <Route path="/cart" element={<Cart 
+              currentUser={currentUser} 
+              cartProducts={cartProducts} 
+              handleAddToCart={handleAddToCart} 
+              handleDeleteFromCart={handleDeleteFromCart}/>} />
+              
               <Route path="/checkout-success" element={<CheckoutSuccess currentUser={currentUser} />} />
               <Route path="/login" element={<UserLogin currentUser={currentUser} setCurrentUser={setCurrentUser} />} />
               <Route path="/signup" element={<UserSignup currentUser={currentUser} setCurrentUser={setCurrentUser} />} />

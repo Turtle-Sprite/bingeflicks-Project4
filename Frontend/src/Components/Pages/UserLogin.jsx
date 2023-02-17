@@ -2,7 +2,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import jwt_decode from 'jwt-decode'
 import { Form, Col, Row, Container } from 'react-bootstrap';
-
+import { Navigate } from 'react-router-dom'
 
 export default function Login({ currentUser, setCurrentUser }) {
     const [email, setEmail] = useState('')
@@ -37,7 +37,10 @@ export default function Login({ currentUser, setCurrentUser }) {
             }
         }
     }
-
+    // conditionally render a navigate component
+	if (currentUser) {
+		return <Navigate to="/" />
+	}
     return (
         <Container>
             <Col sm={12} md={6} lg={5}>

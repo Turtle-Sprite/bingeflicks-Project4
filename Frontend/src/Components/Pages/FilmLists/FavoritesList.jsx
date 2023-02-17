@@ -19,17 +19,19 @@ function FavoritesList({ favoritesArray, handleFavorite, handleDeleteFavorite, h
         }
 
         return (
-            <Card key={idx} style={{ maxWidth: "350px", color: "slategrey", maxHeight: "350px", overflow: "scroll" }} className="m-3 hover:opacity-3 card-Scroll">
+            <Card key={idx} style={{ maxWidth: "350px", color: "slategrey", maxHeight: "350px", overflow: "scroll", textAlign: "center" }} className="m-3 hover:opacity-3 card-Scroll">
                 <Card.Img variant="top" src={`https://image.tmdb.org/t/p/w1280/${film.moviePoster}`} alt={`Screenshot from the film ${film.movieTitle}`} className='pop-film-img' />
                 <Card.Body>
-                    <div>
+
+                    <div className="flexContainer">
+                    <button className="m-4"type="submit" onClick={() => { setMovieDetails(film) }}>See Movie Details</button>
                         {alreadyFav ?
-                            <AiFillHeart className="w-8 h-8 fill-red-500" type="submit" onClick={() => {
+                            <AiFillHeart className="ml-6 w-8 h-8 fill-red-500" type="submit" onClick={() => {
                                 handleToggleFavorites(film.moviTitle, false)
                                 handleDeleteFavorite(film)
                             }} /> :
 
-                            <AiOutlineHeart className="w-8 h-8 stroke-red-500 stroke-2" type="submit" onClick={() => {
+                            <AiOutlineHeart className="ml-6 w-8 h-8 stroke-red-500 stroke-2" type="submit" onClick={() => {
                                 handleToggleFavorites(film.movieTitle, true)
                                 handleFavorite(film)
                             }} />}
@@ -40,7 +42,7 @@ function FavoritesList({ favoritesArray, handleFavorite, handleDeleteFavorite, h
                     </Card.Text>
                     <Card.Text style={{ color: "black" }}>Price: $ {moviePrice}</Card.Text>
                     <Link to={`/movies/${film.movieTtitle}`}>
-                        <button type="submit" onClick={() => { setMovieDetails(film) }}>See Movie Details</button>
+                        
                     </Link>
                 </Card.Body>
             </Card >)
