@@ -4,6 +4,8 @@ import AddReview from "./Reviews/AddReview";
 import GetReview from "./Reviews/GetReview";
 import { Card, Button, Container } from "react-bootstrap";
 import PayButton from "../partials/PayButton";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function TMDBMovieDetails({
     currentUser,
@@ -21,6 +23,7 @@ function TMDBMovieDetails({
 }) {
 
     const [videos, setVideo] = useState([])
+    const notify = (title) => toast(`${title} added to cart!`);
     //call TMDB API for current films
     const getFilmsTMDB = async () => {
         try {
@@ -39,7 +42,7 @@ function TMDBMovieDetails({
     const trailersURL = videos.map(video => {
         if (video.type == "Clip" || video.type == "Trailer") {
             return (
-                <iframe key={video.id} width="560" height="315" src={`https://www.youtube.com/embed/${video.key}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+                <iframe key={video.id} width="100%" height="700px" src={`https://www.youtube.com/embed/${video.key}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
             )
         } else {
             return null
@@ -59,13 +62,15 @@ function TMDBMovieDetails({
     return (
         <>
             <Container>
-                <h1>MovieDetails</h1>
+                <div className="homepage-title mt-3 ">
+                    <h1>{movieDetails.title}</h1>
+                </div>
 
                 <div className="flexContainer items-center">
                     {/* are there many trailer? */}
                     {trailersURL.length > 1 ?
                         <div>
-                            <Card style={{ color: "slategrey", maxHeight: "500px", maxWidth: "600" }} className="m-3">
+                            <Card style={{ color: "slategrey", maxHeight: "700px", maxWidth: "600" }} className="m-3">
                                 {/* One Big trailer */}
                                 {handleManyVideos(trailersURL, 0)}
                                 <Card.Body>
@@ -76,8 +81,10 @@ function TMDBMovieDetails({
                                     </Card.Text>
                                     <Card.Text style={{ color: "black" }}>Price: $ {moviePrice}</Card.Text>
                                     <div className="flexContainer items-center ">
-                                        <button type="submit" onClick={() => handleAddToCart(movieDetails, 500)}> Add to cart</button>
-                                        <PayButton cartProducts={cartProducts} currentUser={currentUser} />
+                                        <button className="mx-4" type="submit" onClick={() => {
+                                            notify(movieDetails.title) 
+                                            handleAddToCart(movieDetails, 500)}}> Add to cart</button>
+                                        <PayButton className="mx-4" cartProducts={cartProducts} currentUser={currentUser} />
                                     </div>
                                 </Card.Body>
                             </Card>

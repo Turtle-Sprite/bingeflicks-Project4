@@ -9,9 +9,9 @@
   width: 100%;
   margin: 0 auto;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   overflow: hidden;
+  justify-content: space-between;
 }
 .logo {
   text-decoration: none;
@@ -65,7 +65,7 @@ button[type=submit] {
   height: 6rem;
   margin-left: 20px;
   text-align: center;
-  @apply bg-amber-500 border-amber-700 border-4
+  @apply bg-amber-500 border-amber-700 border-2
 }
 
 /* .scrolling-container {
