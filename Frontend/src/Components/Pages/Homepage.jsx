@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import HomeCarousel from "./FilmLists/HomeCarousel";
 import PopularFilmList from './FilmLists/PopularFilmList'
 import FavoritesList from "./FilmLists/FavoritesList";
+import { Card, Button, Container } from "react-bootstrap";
 
 
 function Homepage({ currentUser,
@@ -41,7 +42,8 @@ function Homepage({ currentUser,
                     setMovieDetails={setMovieDetails}
                 />
             </div>
-            <div className="homepage-title m-1 p-4 shadow-lg rounded">
+            <Container>
+            <div className="homepage-title mt-3 m-1 p-4 shadow-lg rounded">
                 <h2>Browse the latest movies!</h2>
             </div>
             <div className="scrolling-container">
@@ -68,7 +70,7 @@ function Homepage({ currentUser,
             </div>
             {currentUser ?
             <>
-            <div className="m-1 p-4 shadow-lg">
+            <div className="homepage-title mt-3 m-1 p-4 shadow-lg rounded">
                 <h2>Watch your favorites again!</h2>
             </div>
             <div className="scrolling-container">
@@ -79,9 +81,11 @@ function Homepage({ currentUser,
                     setMovieDetails={setMovieDetails}
                 />
             </div>
+
             </>
                 : null
             }
+            </Container>
         </>
     );
 }

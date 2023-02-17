@@ -30,7 +30,7 @@ function NavbarNav({currentUser, handleLogout}) {
                     </Link>
                     </div>
                     :
-                    <div className='flexContainer'> 
+                    <div className='flexContainer items-baseline'> 
                     <Link to="/login" className="text-gray-800 hover:text-gray-400 duration-500 link">
                         <button type="submit"> Login </button>
                     </Link>
@@ -40,7 +40,7 @@ function NavbarNav({currentUser, handleLogout}) {
                     </Link>
                     </div>
                     }
-                    <div>
+                    <div className='flexContainer items-baseline'> 
                     <Link to='/cart' className="text-gray-800 hover:text-gray-400 duration-500 link col-ends">
 
                         {/* Shopping bag */}

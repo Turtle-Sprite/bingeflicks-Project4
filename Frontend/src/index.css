@@ -61,9 +61,10 @@ button[type=submit] {
 }
 
 .homepage-title {
-  width: 400px;
+  width: 500px;
   height: 6rem;
   margin-left: 20px;
+  text-align: center;
   @apply bg-amber-500 border-amber-700 border-4
 }
 
