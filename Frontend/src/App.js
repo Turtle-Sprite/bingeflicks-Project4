@@ -258,7 +258,7 @@ function App() {
     }
   }
 
-
+  console.log()
   return (
     <div>
       <div className="page-container">

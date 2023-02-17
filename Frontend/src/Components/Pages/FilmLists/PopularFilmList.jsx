@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom"
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import { Card, Button } from "react-bootstrap";
-import { useState } from "react";
+import { AiOutlineHeart, AiFillHeart, AiFillPlusCircle } from "react-icons/ai";
+import { Card } from "react-bootstrap";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function PopularFilmList({ films, handleFavorite, handleDeleteFavorite, currentUser, favoritesArray, handleToggleFavorites, reviews, signInError, setSignInError, setRenderMovieDetails, setMovieDetails, handleAddToCart, cart, handleDeleteFromCart, moviePrice }) {
-
+function PopularFilmList({ films, handleFavorite, handleDeleteFavorite, currentUser, favoritesArray, reviews, setSignInError, setMovieDetails, handleAddToCart, cartProducts, handleDeleteFromCart, moviePrice, signInError }) {
+    const notify = (title) => toast(`${title} added to cart!`);
     // let inCart = false
 
     //map through all films and make aray of titles
@@ -22,26 +23,42 @@ function PopularFilmList({ films, handleFavorite, handleDeleteFavorite, currentU
         }
 
         return (
-            <Card key={idx} style={{ maxWidth: "350px", color: "slategrey", maxHeight: "400px", overflow: "scroll" }} className="m-3 hover:opacity-3 cardScroll">
+            <Card key={idx} style={{ maxWidth: "350px", color: "slategrey", maxHeight: "450px"}} className="m-3 hover:opacity-3 cardScroll">
                 <Card.Img variant="top" src={`https://image.tmdb.org/t/p/w1280/${film.backdrop_path}`} alt={`Screenshot from the film ${film.title}`} className='pop-film-img' />
                 <Card.Body>
                     <div className="flexContainer">
                         <Link to={`/movies/${film.title}`}>
 
-                            <button className="mr-5 my-2 self-start" type="submit" onClick={() => { setMovieDetails(film) }}>See Movie Details</button>
+                            <button className="mr-9 my-2 self-start" type="submit" onClick={() => { setMovieDetails(film) }}>See Movie Details</button>
                         </Link>
+
+                        
                         {currentUser ?
                             (
                                 <div>
                                     {alreadyFav ?
-                                        <AiFillHeart className="ml-3 w-8 h-8 fill-red-500" type="submit" onClick={() => {
-
+                                    <div>
+                                        <AiFillHeart className="ml-3 w-10 h-10 fill-red-500" type="submit" onClick={() => {
                                             handleDeleteFavorite(film)
-                                        }} /> :
-
-                                        <AiOutlineHeart className="ml-3 w-8 h-8 stroke-red-500 stroke-2" type="submit" onClick={() => {
+                                        }} /> 
+                                        <div className="flexContainer items-baseline">
+                                        <AiFillPlusCircle className=" w-8 h-8" onClick={() => { 
+                                            notify(film.title) 
+                                            handleAddToCart(film, 500) }} /> Cart
+                                        <ToastContainer />
+                                    </div>
+                                    </div>
+                                        :
+                                        <div>
+                                        <AiOutlineHeart className="ml-3 w-10 h-10 stroke-red-500 stroke-2" type="submit" onClick={() => {
                                             handleFavorite(film)
-                                        }} />}
+                                        }} />
+                                        <div className="flexContainer items-baseline">
+                                        <AiFillPlusCircle className="w-8 h-8"  onClick={() => { notify(film.title) 
+                                        handleAddToCart(film, 500) }} /> Cart
+                                        <ToastContainer />
+                                        </div>
+                                        </div>}
                                 </div>
                             )
                             :

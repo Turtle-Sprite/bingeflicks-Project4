@@ -76,7 +76,7 @@ function TMDBMovieDetails({
                                     </Card.Text>
                                     <Card.Text style={{ color: "black" }}>Price: $ {moviePrice}</Card.Text>
                                     <div className="flexContainer items-center ">
-                                        <button type="submit" onClick={() => handleAddToCart(movieDetails, 2000)}> Add to cart</button>
+                                        <button type="submit" onClick={() => handleAddToCart(movieDetails, 500)}> Add to cart</button>
                                         <PayButton cartProducts={cartProducts} currentUser={currentUser} />
                                     </div>
                                 </Card.Body>

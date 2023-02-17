@@ -60,6 +60,13 @@ button[type=submit] {
   @apply flex justify-between items-center px-4 py-2 rounded hover:bg-teal-700 bg-teal-800 hover:text-gray-400 mt-2
 }
 
+.homepage-title {
+  width: 400px;
+  height: 6rem;
+  margin-left: 20px;
+  @apply bg-amber-500 border-amber-700 border-4
+}
+
 /* .scrolling-container {
   overflow-x: scroll;
   overflow-y: hidden;

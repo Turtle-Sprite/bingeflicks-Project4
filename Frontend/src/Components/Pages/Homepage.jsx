@@ -9,7 +9,6 @@ function Homepage({ currentUser,
     handleFavorite,
     handleDeleteFavorite,
     favoritesArray,
-    handleToggleFavorites,
     reviews,
     getReviews,
     postReviews,
@@ -21,10 +20,13 @@ function Homepage({ currentUser,
     setMovieDetails,
     getFilmsTMDB,
     getFavorites,
-    moviePrice
+    moviePrice,
+    handleAddToCart,
+    handleDeleteFromCart,
+    cartProducts
 }) {
     
-
+    console.log(moviePrice)
     useEffect(() => {
         getFilmsTMDB()
         getFavorites()
@@ -39,7 +41,9 @@ function Homepage({ currentUser,
                     setMovieDetails={setMovieDetails}
                 />
             </div>
-            <h2>Browse the latest movies!</h2>
+            <div className="homepage-title m-1 p-4 shadow-lg rounded">
+                <h2>Browse the latest movies!</h2>
+            </div>
             <div className="scrolling-container">
                 <PopularFilmList
                     currentUser={currentUser}
@@ -47,7 +51,6 @@ function Homepage({ currentUser,
                     handleFavorite={handleFavorite}
                     handleDeleteFavorite={handleDeleteFavorite}
                     favoritesArray={favoritesArray}
-                    handleToggleFavorites={handleToggleFavorites}
                     reviews={reviews}
                     getReviews={getReviews}
                     postReviews={postReviews}
@@ -58,19 +61,22 @@ function Homepage({ currentUser,
                     setSignInError={setSignInError}
                     setMovieDetails={setMovieDetails}
                     moviePrice={moviePrice}
+                    handleAddToCart={handleAddToCart}
+                    handleDeleteFromCart={handleDeleteFromCart}
+                    cartProducts={cartProducts}
                 />
             </div>
             {currentUser ?
             <>
-            <h2>Watch your favorites again!</h2>
+            <div className="m-1 p-4 shadow-lg">
+                <h2>Watch your favorites again!</h2>
+            </div>
             <div className="scrolling-container">
                 <FavoritesList
                     favoritesArray={favoritesArray}
                     handleFavorite={handleFavorite}
                     handleDeleteFavorite={handleDeleteFavorite}
-                    handleToggleFavorites={handleToggleFavorites}
                     setMovieDetails={setMovieDetails}
-                    
                 />
             </div>
             </>
