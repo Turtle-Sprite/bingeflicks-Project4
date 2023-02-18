@@ -8,7 +8,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node index.js",
-    "heroku-postbuild": "cd Frontend && npm install && npm run build"
+    "heroku-postbuild": "cd Backend/Frontend && npm install && npm run build"
   },
   "keywords": [],
   "author": "",
