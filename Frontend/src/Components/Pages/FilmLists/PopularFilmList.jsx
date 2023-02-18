@@ -44,6 +44,7 @@ function PopularFilmList({ films, handleFavorite, handleDeleteFavorite, currentU
                                             <div className="flexContainer items-baseline">
                                                 <AiFillPlusCircle className=" w-8 h-8" onClick={() => {
                                                     notify(film.title)
+                                                    console.log("why are you notadding to cart?", film)
                                                     handleAddToCart(film, 500)
                                                 }} /> Cart
                                                 <ToastContainer />

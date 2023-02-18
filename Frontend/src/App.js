@@ -83,7 +83,7 @@ function App() {
           'Authorization': token
         }
       }
-      console.log(cartProducts)
+
       const postResponse = await axios.post(`${process.env.REACT_APP_SERVER_URL}/orders`, cartProducts, options)
       console.log("post reponse", postResponse)
       // const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/orders`, options)
@@ -311,10 +311,10 @@ function App() {
               handleAddToCart={handleAddToCart} 
               handleDeleteFromCart={handleDeleteFromCart}/>} />
               
-              <Route path="/checkout-success" element={<CheckoutSuccess currentUser={currentUser} />} />
+              <Route path="/checkout-success" element={<CheckoutSuccess currentUser={currentUser} cartProduccts={cartProducts}/>} />
               <Route path="/login" element={<UserLogin currentUser={currentUser} setCurrentUser={setCurrentUser} />} />
               <Route path="/signup" element={<UserSignup currentUser={currentUser} setCurrentUser={setCurrentUser} />} />
-              {/* <Route path="/*" element={<NotFound />} /> */}
+              <Route path="/*" element={<NotFound />} />
             </Routes>
           </Router>
         </div>

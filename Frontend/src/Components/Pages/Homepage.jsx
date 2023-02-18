@@ -27,7 +27,6 @@ function Homepage({ currentUser,
     cartProducts
 }) {
     
-    console.log(moviePrice)
     useEffect(() => {
         getFilmsTMDB()
         getFavorites()

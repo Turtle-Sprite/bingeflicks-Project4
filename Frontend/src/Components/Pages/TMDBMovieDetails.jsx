@@ -81,6 +81,7 @@ function TMDBMovieDetails({
                                             notify(movieDetails.title)
                                             handleAddToCart(movieDetails, 500)
                                         }}> Add to cart</button>
+                                         <ToastContainer />
                                         <PayButton className="mx-4" cartProducts={cartProducts} currentUser={currentUser} />
                                     </div>
                                 </Card.Body>
