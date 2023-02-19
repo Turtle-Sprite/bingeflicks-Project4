@@ -153,7 +153,7 @@ function App() {
           'Authorization': token
         }
       }
-      const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/movies/favorites`, options)
+      const response = await axios.get(`https://binge-flicks.herokuapp.com/api/movies/favorites`, options)
 
       setFavoritesArray(response.data)
     } catch (err) {
@@ -173,7 +173,7 @@ function App() {
         }
       }
       //POST the movie to the user's favorites array
-      const respone = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/movies/${filmDetails.title}`, filmDetails, options)
+      const respone = await axios.post(`https://binge-flicks.herokuapp.com/api/movies/${filmDetails.title}`, filmDetails, options)
       getFavorites()
     } catch (err) {
       console.log(err)
