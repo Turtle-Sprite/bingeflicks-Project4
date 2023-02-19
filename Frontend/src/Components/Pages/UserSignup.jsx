@@ -2,7 +2,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import jwt_decode from 'jwt-decode'
 import { Form, Col, Row, Container } from 'react-bootstrap';
-
+import { Navigate } from 'react-router-dom'
 
 export default function Register({ currentUser, setCurrentUser }) {
     const [fname, setFName] = useState('')
@@ -41,7 +41,9 @@ export default function Register({ currentUser, setCurrentUser }) {
             }
         }
     }
-
+    if (currentUser) {
+		return <Navigate to="/" />
+	}
     return (
         <>
             <div className='mx-auto'>
