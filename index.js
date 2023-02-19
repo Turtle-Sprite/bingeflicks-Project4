@@ -26,11 +26,11 @@ app.use('/movies', require('./controllers/movies.js'))
 app.use('/orders', require('./controllers/orders.js'))
 app.use('/reviews', require('./controllers/reviews.js'))
 
-app.use(express.static(path.join(__dirname, "/Frontend/build")));
+// app.use(express.static(path.join(__dirname, "/Frontend/build")));
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '/Frontend/build', 'index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, '/Frontend/build', 'index.html'));
+// });
 
 // hey listen
 app.listen(PORT, () => {
