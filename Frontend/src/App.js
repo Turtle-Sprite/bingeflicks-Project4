@@ -84,7 +84,7 @@ function App() {
         }
       }
 
-      const postResponse = await axios.post(`${process.env.REACT_APP_SERVER_URL}/orders`, cartProducts, options)
+      const postResponse = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/orders`, cartProducts, options)
       console.log("post reponse", postResponse)
       // const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/orders`, options)
       
@@ -137,7 +137,7 @@ function App() {
   //call TMDB API for current films
   const getFilmsTMDB = async () => {
     try{
-      const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/movies`)
+      const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/movies`)
       setFilm(response.data.results)
     } catch (err) {
       console.warn('err in getFilmsTMDB', err)
@@ -153,7 +153,7 @@ function App() {
           'Authorization': token
         }
       }
-      const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/movies/favorites`, options)
+      const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/movies/favorites`, options)
 
       setFavoritesArray(response.data)
     } catch (err) {
@@ -173,7 +173,7 @@ function App() {
         }
       }
       //POST the movie to the user's favorites array
-      const respone = await axios.post(`${process.env.REACT_APP_SERVER_URL}/movies/${filmDetails.title}`, filmDetails, options)
+      const respone = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/movies/${filmDetails.title}`, filmDetails, options)
       getFavorites()
     } catch (err) {
       console.log(err)
@@ -191,7 +191,7 @@ function App() {
         }
       }
       //DELETE the movie from the user's favorites array
-      const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/movies/${filmDetails.title}`, options)
+      const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/api/movies/${filmDetails.title}`, options)
       getFavorites()
     } catch (err) {
       console.log(err.response.data)
@@ -210,7 +210,7 @@ function App() {
         }
       }
 
-      const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/reviews/${movieTitle}`, options)
+      const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/reviews/${movieTitle}`, options)
 
       setReviews(response.data)
 
@@ -232,7 +232,7 @@ function App() {
         }
       }
 
-      const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/reviews/${userReview.movieTitle}`, userReview, options)
+      const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/reviews/${userReview.movieTitle}`, userReview, options)
       // navigate(`/movies/${movieDetails.title}`)
 
     } catch (err) {
@@ -251,7 +251,7 @@ function App() {
         }
       }
 
-      const respone = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/reviews/${reviewId}`, options)
+      const respone = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/api/reviews/${reviewId}`, options)
 
     } catch (err) {
       console.log("DELETE reviews error", err)

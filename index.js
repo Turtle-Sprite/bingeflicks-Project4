@@ -4,6 +4,7 @@ const express = require('express')
 const cors = require('cors')
 const rowdy = require('rowdy-logger')
 const stripe = require("./controllers/stripe")
+const path = require('path')
 
 // config express app
 const app = express()
@@ -21,16 +22,21 @@ app.use("/stripe", stripe)
 //set up res.locals here
 
 // controllers
-app.use('/users', require('./controllers/users.js'))
-app.use('/movies', require('./controllers/movies.js'))
-app.use('/orders', require('./controllers/orders.js'))
-app.use('/reviews', require('./controllers/reviews.js'))
+app.use('api/users', require('./controllers/users.js'))
+app.use('api/movies', require('./controllers/movies.js'))
+app.use('api/orders', require('./controllers/orders.js'))
+app.use('api/reviews', require('./controllers/reviews.js'))
 
-// app.use(express.static(path.join(__dirname, "/Frontend/build")));
+//Serves Static assets if in production. 
+if (process.env.NODE_ENV === 'production') {
+//set static folder
+  app.use(express.static(path.join(__dirname, "/Frontend/build")));
 
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, '/Frontend/build', 'index.html'));
-// });
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '/Frontend/build', 'index.html'));
+  });
+}
+
 
 // hey listen
 app.listen(PORT, () => {

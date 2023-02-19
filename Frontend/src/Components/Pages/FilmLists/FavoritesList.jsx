@@ -10,6 +10,7 @@ function FavoritesList({ favoritesArray, handleFavorite, handleDeleteFavorite, h
     let responseArray = favoritesArray.map(response => {
         return response.movieTitle
     })
+    
     if(favoritesArray.length > 0) {
     favFilms = favoritesArray.map((film, idx) => {
         if (responseArray.includes(film.movieTitle)) {
