@@ -191,7 +191,7 @@ function App() {
         }
       }
       //DELETE the movie from the user's favorites array
-      const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/api/movies/${filmDetails.title}`, options)
+      const response = await axios.delete(`https://binge-flicks.herokuapp.com/api/movies/${filmDetails.title}`, options)
       getFavorites()
     } catch (err) {
       console.log(err.response.data)
@@ -210,7 +210,7 @@ function App() {
         }
       }
 
-      const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/reviews/${movieTitle}`, options)
+      const response = await axios.get(`https://binge-flicks.herokuapp.com/api/reviews/${movieTitle}`, options)
 
       setReviews(response.data)
 
@@ -232,7 +232,7 @@ function App() {
         }
       }
 
-      const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/reviews/${userReview.movieTitle}`, userReview, options)
+      const response = await axios.post(`https://binge-flicks.herokuapp.com/api/reviews/${userReview.movieTitle}`, userReview, options)
       // navigate(`/movies/${movieDetails.title}`)
 
     } catch (err) {
@@ -251,7 +251,7 @@ function App() {
         }
       }
 
-      const respone = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/api/reviews/${reviewId}`, options)
+      const respone = await axios.delete(`https://binge-flicks.herokuapp.com/api/reviews/${reviewId}`, options)
 
     } catch (err) {
       console.log("DELETE reviews error", err)
