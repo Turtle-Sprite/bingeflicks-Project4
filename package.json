@@ -8,7 +8,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node .",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION= false cd Frontend && npm install && npm run build"
+    "heroku-postbuild": "cd Frontend && npm install && npm run build"
   },
   "keywords": [],
   "author": "",
