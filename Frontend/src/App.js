@@ -84,8 +84,8 @@ function App() {
         }
       }
 
-      const postResponse = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/orders`, cartProducts, options)
-      console.log("post reponse", postResponse)
+      // const postResponse = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/orders`, cartProducts, options)
+      // console.log("post reponse", postResponse)
       // const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/orders`, options)
       
       // setCartProducts(response.data)

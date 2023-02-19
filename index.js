@@ -22,10 +22,10 @@ app.use("/stripe", stripe)
 //set up res.locals here
 
 // controllers
-app.use('api/users', require('./controllers/users.js'))
-app.use('api/movies', require('./controllers/movies.js'))
-app.use('api/orders', require('./controllers/orders.js'))
-app.use('api/reviews', require('./controllers/reviews.js'))
+app.use('/api/users', require('./controllers/users.js'))
+app.use('/api/movies', require('./controllers/movies.js'))
+app.use('/api/orders', require('./controllers/orders.js'))
+app.use('/api/reviews', require('./controllers/reviews.js'))
 
 //Serves Static assets if in production. 
 if (process.env.NODE_ENV === 'production') {
