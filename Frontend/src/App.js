@@ -137,7 +137,7 @@ function App() {
   //call TMDB API for current films
   const getFilmsTMDB = async () => {
     try{
-      const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/movies`)
+      const response = await axios.get(`https://binge-flicks.herokuapp.com/api/movies`)
       setFilm(response.data.results)
     } catch (err) {
       console.warn('err in getFilmsTMDB', err)
