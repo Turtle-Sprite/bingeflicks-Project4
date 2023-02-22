@@ -22,7 +22,7 @@ const MoviesSchema = new mongoose.Schema({
     TMDBId: {
         type: String
     },
-    rrelease_date: {
+    release_date: {
         type: String
     },
     price: {

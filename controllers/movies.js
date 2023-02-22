@@ -54,12 +54,13 @@ router.post('/:id', authLockedRoute, async (req, res) => {
         })
 
         const newMovie = await db.Movies.findOneAndUpdate(
-            { movieTitle: req.body.title },
+            { title: req.body.title },
             {
-                moviePoster: req.body.poster_path,
+                poster_path: req.body.poster_path,
                 TMDBId: req.body.id,
-                movieDescription: req.body.overview,
-                releaseDate: req.body.release_date
+                overview: req.body.overview,
+                release_date: req.body.release_date,
+                favorite: true
             },
             { new: true, upsert: true }
         )
@@ -86,7 +87,7 @@ router.delete('/:id', authLockedRoute, async (req, res) => {
         })
 
         const newMovie = await db.Movies.findOne(
-            { movieTitle: req.params.id })
+            { title: req.params.id })
 
         if (newMovie._id) {
 

@@ -10,7 +10,7 @@ function PopularFilmList({ films, handleFavorite, handleDeleteFavorite, currentU
 
     //map through all films and make aray of titles
     let responseArray = favoritesArray.map(response => {
-        return response.movieTitle
+        return response.title
     })
     //map through all films and make a simple film card with data. 
     const popfilms = films.map((film, idx) => {

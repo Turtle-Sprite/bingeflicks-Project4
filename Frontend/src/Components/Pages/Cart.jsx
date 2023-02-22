@@ -8,13 +8,13 @@ function Cart({ currentUser, cartProducts, handleAddToCart, handleDeleteFromCart
         return (
             <div className='p-3 m-2 rounded-sm shadow-lg'>
                 <div className='product-name'>
-                    <h3 className="m-2" >{product.movieTitle}</h3>
+                    <h3 className="m-2" >{product.title}</h3>
                 </div>
                 <div className='product-price'>
-                    <h3 className="m-1">{product.moviePrice}</h3>
+                    <h3 className="m-1">{product.price}</h3>
                 </div>
                 <div className='product-description'>
-                    <p className="m-1">{product.movieDescription}</p>
+                    <p className="m-1">{product.overview}</p>
                 </div>
                 <div className='flexContainer'>
                 <AiFillDelete onClick={() => handleDeleteFromCart(product)} className='iconbig'/>

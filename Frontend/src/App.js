@@ -38,10 +38,10 @@ function App() {
 
   const [cartProducts, setCartProducts] = useState([
     {
-      movieTitle: null,
-      moviePrice: null,
-      movieDescription: null,
-      TMDBid: null,
+      title: null,
+      price: null,
+      overview: null,
+      TMDBId: null,
     }
   ])
 
@@ -96,7 +96,7 @@ function App() {
 
   function handleDeleteFromCart(item) {
     const newProducts = cartProducts?.filter(cartItem => {
-      return cartItem.movieTitle !== item.movieTitle
+      return cartItem.title !== item.title
     })
 
     setCartProducts(newProducts)
@@ -105,7 +105,7 @@ function App() {
   function getTotalCost() {
     let totalCost = 0
     for (let i = 0; i < cartProducts.length; i++) {
-      totalCost = totalCost + cartProducts[i].moviePrice
+      totalCost = totalCost + cartProducts[i].price
     }
     return totalCost
   }
@@ -173,7 +173,7 @@ function App() {
         }
       }
       //POST the movie to the user's favorites array
-      const respone = await axios.post(`https://binge-flicks.herokuapp.com/api/movies/${filmDetails.title}`, filmDetails, options)
+      const response = await axios.post(`https://binge-flicks.herokuapp.com/api/movies/${filmDetails.title}`, filmDetails, options)
       getFavorites()
     } catch (err) {
       console.log(err)
@@ -251,7 +251,7 @@ function App() {
         }
       }
 
-      const respone = await axios.delete(`https://binge-flicks.herokuapp.com/api/reviews/${reviewId}`, options)
+      const response = await axios.delete(`https://binge-flicks.herokuapp.com/api/reviews/${reviewId}`, options)
 
     } catch (err) {
       console.log("DELETE reviews error", err)
