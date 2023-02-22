@@ -1,34 +1,34 @@
 const mongoose = require('mongoose')
 
 const MoviesSchema = new mongoose.Schema({
-    movieTitle: {
+    title: {
         type: String 
     },
-    movieGenre: {
+    genre_ids: [{
         type: String 
-    },
-    moviePoster: {
+    }],
+    backdrop_path: {
         type: String
     },
-    movieTrailer: {
+    poster_path: {
         type: String
     },
-    movieVideo: {
+    video: {
         type: String
     },
-    movieDescription: {
+    overview: {
         type: String
     },
     TMDBId: {
         type: String
     },
-    releaseDate: {
+    rrelease_date: {
         type: String
     },
-    moviePrice: {
+    price: {
         type: Number
     },
-    movieFavorite: {
+    favorite: {
         type: Boolean
     },
 
