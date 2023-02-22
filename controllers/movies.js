@@ -7,7 +7,7 @@ const axios = require('axios');
 //get movies from TMDB
 router.get('/', async (req, res) => {
     try {
-        const films = db.Movies.find({})
+        const films = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&page=1`)
         res.json(films.data)
     } catch (err) {
         console.log(err)
