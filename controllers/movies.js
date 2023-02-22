@@ -8,7 +8,8 @@ const axios = require('axios');
 router.get('/', async (req, res) => {
     try {
         const films = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&page=1`)
-        res.json(films.data)
+        console.log(films)
+        res.json(films.response.data)
     } catch (err) {
         console.log(err)
         res.status(500).json({ msg: 'Server Error' })
